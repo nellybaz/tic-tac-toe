@@ -1,9 +1,9 @@
-require "rspec/autorun"
+require "rspec"
 
 class Game
 end
 
-describe Game do
+RSpec.describe Game do
     it "should do nothing" do
         "1".should == "1"
     end
