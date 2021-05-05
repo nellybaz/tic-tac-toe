@@ -2,8 +2,6 @@ class Board
 
     def initialize()
         @state = ['.','.','.','.','.','.','.','.','.']
-        puts "Welcome to Tic-Tac-Toe"
-        puts
     end
 
     # Set state

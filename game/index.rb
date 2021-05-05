@@ -1,5 +1,3 @@
-require_relative "./board"
+require_relative "./game"
 
-game = Board.new
-game.draw
-game.get_row(2)
+Game.new.start
