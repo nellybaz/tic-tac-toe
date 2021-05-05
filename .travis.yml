@@ -1,2 +1,2 @@
 script:
-  - ruby test/index.rb
+  - ruby ./tests/index.rb
