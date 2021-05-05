@@ -2,8 +2,7 @@ class Board
 
     def initialize()
         @state = ['.','.','.','.','.','.','.','.','.']
-        print "Welcome to Tic-Tac-Toe"
-        puts
+        puts "Welcome to Tic-Tac-Toe"
         puts
     end
 
@@ -20,18 +19,13 @@ class Board
 
     # Draw board
     def draw()
-        print "  "+"abc"
-        puts
-        print "  "+"-"*3
-        puts ""
+        puts "  "+"abc"
+        puts "  "+"-"*3
         [0,1,2].each do |index|
-            print "#{index}" + self.get_row(index)
-            puts ""
+            puts "#{index}" + self.get_row(index)
         end
-        print "  "+"-"*3
-        puts
+        puts "  "+"-"*3
         
-        puts
     end
 
     # Return content of a given row
