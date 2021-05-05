@@ -1,4 +1,0 @@
-script:
-  - sudo apt-get install -y ruby-rspec-core
-  - bundle install
-  - rspec
