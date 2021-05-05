@@ -3,7 +3,7 @@ require_relative "./board"
 
 
 class Game
-    def initialize()
+    def initialize
         puts "Welcome to Tic-Tac-Toe"
         puts
         @game_is_playing = false
@@ -12,23 +12,11 @@ class Game
         @valid_games = {"a0" => 0, "b0" => 1, "c0"=>2, "a1"=>3, "b1"=>4, "c1"=>5, "a2"=>6, "b2"=>7, "c2"=>8}
     end
 
-    # Getters start ==========
-    def game_is_playing()
-        @game_is_playing
-    end
-
-    def current_player()
-        @current_player
-    end
-
-    def valid_games()
-        @valid_games
-    end
-
-    # Getters end  =========
+    attr_reader :game_is_playing, :current_player, :valid_games
 
 
-    def current_symbol()
+
+    def current_symbol
         return @current_player == 1 ? "x" : "o"
     end
 
@@ -38,7 +26,7 @@ class Game
     end
 
 
-    def next_player()
+    def next_player
         if @current_player == 1
             @current_player = 2
         else
@@ -46,7 +34,7 @@ class Game
         end
     end
 
-    def start()
+    def start
         @board.draw
         @game_is_playing = true
         while @game_is_playing || true # TODO: implement the win, draw, or out of move function 
@@ -58,11 +46,13 @@ class Game
                 game = gets.chomp
             end
 
+            # TODO: check if cell is empty
+
             cell = @valid_games[game]
             @board.set_cell(cell, self.current_symbol)
             @board.draw
             self.next_player
-            @game_is_playing = false
+            #@game_is_playing = false
             
         end
 

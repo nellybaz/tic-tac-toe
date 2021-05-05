@@ -1,22 +1,16 @@
 class Board
 
-    def initialize()
-        @state = ['.','.','.','.','.','.','.','.','.']
+    def initialize
+        @state = ['.','.','.','.','.','.','.','.','.'] # TODO: initialize with indices
     end
 
-    # Set state
-    def state=(state)
-        @state = state
-    end
 
-    # Get state
-    def state()
-        @state
-    end
+    attr_accessor :state
+
 
 
     # Draw board
-    def draw()
+    def draw
         puts "  "+"abc"
         puts "  "+"-"*3
         [0,1,2].each do |index|
