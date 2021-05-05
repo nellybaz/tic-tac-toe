@@ -6,12 +6,12 @@
 
 ## Build 
 - clone the repo
-- run 'bundle install'
+- run ```bundle install```
 
 
 ## Test
-- run 'rspec'
+- run ```rspec```
 
 
 ## Run app
-- run 'ruby game/index.rb' in the project's main folder
+- run ```ruby game/index.rb``` in the project's main folder
