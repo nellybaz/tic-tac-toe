@@ -1,2 +1,3 @@
 script:
+  - bundle install
   - ruby ./tests/index.rb
