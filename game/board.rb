@@ -3,6 +3,8 @@ class Board
     def initialize()
         @state = ['.','.','.','.','.','.','.','.','.']
         print "Welcome to Tic-Tac-Toe"
+        puts
+        puts
     end
 
     # Set state
@@ -22,12 +24,10 @@ class Board
         puts
         print "  "+"-"*3
         puts ""
-        print "0" + self.get_row(0)
-        puts ""
-        print "1" + self.get_row(1)
-        puts ""
-        print "2" + self.get_row(2)
-        puts
+        [0,1,2].each do |index|
+            print "#{index}" + self.get_row(index)
+            puts ""
+        end
         print "  "+"-"*3
         puts
         
