@@ -1,8 +1,8 @@
 name: Ruby
 
 on:
-  push:
-    branches: [ master, dev ]
+  # push:
+  #   branches: [ "*"]
   pull_request:
     branches: [ master ]
 
