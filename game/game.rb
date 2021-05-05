@@ -49,7 +49,7 @@ class Game
     def start()
         @board.draw
         @game_is_playing = true
-        while @game_is_playing
+        while @game_is_playing || true # TODO: implement the win, draw, or out of move function 
             puts "Player #{@current_player}'s turn [e.g a0, b2, c1]:"
             game = gets.chomp
 
@@ -58,6 +58,10 @@ class Game
                 game = gets.chomp
             end
 
+            cell = @valid_games[game]
+            @board.set_cell(cell, self.current_symbol)
+            @board.draw
+            self.next_player
             @game_is_playing = false
             
         end

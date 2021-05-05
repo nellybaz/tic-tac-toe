@@ -17,4 +17,12 @@ RSpec.describe Board do
         board.get_row(0).should == '|xxx|'
     end
 
+    it "should set cell" do
+        board = Board.new
+        board.get_cell(0).should == '.'
+        board.set_cell(0, 'x')
+        board.get_cell(0).should == 'x'
+    end
+
+
 end

@@ -37,4 +37,14 @@ class Board
         row_output
     end
 
+
+    def set_cell(cell, symbol)
+        @state[cell] = symbol
+    end
+
+    def get_cell(cell)
+        @state[cell]
+    end
+
+
 end
