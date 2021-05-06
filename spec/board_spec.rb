@@ -86,5 +86,20 @@ RSpec.describe Board do
 
     end
 
+    it "should return true for draw state" do
+        board = Board.new
+        new_state = ['O','O','X','X','X','O','O','X','X']
+        board.state = new_state
+        board.in_draw_state.should == true
+    end
+
+
+    it "should return false for non-draw state" do
+        board = Board.new
+        new_state = ['X','.','.','.','X','.','.','.','X']
+        board.state = new_state
+        board.in_draw_state.should == false
+    end
+
 
 end

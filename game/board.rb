@@ -97,4 +97,14 @@ class Board
         winning_state
     end
 
+    def in_draw_state
+        count = 0
+        @state.each do |item|
+            if item == 'X' || item == 'O'
+                count += 1
+            end
+        end
+        return count == @state.length
+    end
+
 end
