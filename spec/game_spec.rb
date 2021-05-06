@@ -39,5 +39,11 @@ RSpec.describe Game do
         game.current_symbol.should == 'O'
 
     end
+
+    it "should return 4 as the computer move" do
+        game = Game.new
+        game.board.state = ['X','X','X','X','4','X','X','X','X']
+        game.get_computer_move.should == 4
+    end
     
 end
