@@ -1,7 +1,7 @@
 class Board
 
     def initialize
-        @state = ['.','.','.','.','.','.','.','.','.'] # TODO: initialize with indices
+        @state = ['0','1','2','3','4','5','6','7','8'] # TODO: initialize with indices
     end
 
 
@@ -11,21 +11,21 @@ class Board
 
     # Draw board
     def draw
-        puts "  "+"abc"
-        puts "  "+"-"*3
+        # puts "  "+"abc"
+        puts "  "+"-"*7
         [0,1,2].each do |index|
-            puts "#{index}" + self.get_row(index)
+            puts " " + self.get_row(index)
         end
-        puts "  "+"-"*3
+        puts "  "+"-"*7
         
     end
 
     # Return content of a given row
     def get_row(index)
         limit = 3 * index
-        row_output = "|"
+        row_output = "| "
         for i in limit..limit+3-1
-            row_output += @state[i]
+            row_output += @state[i] + " "
         end
         row_output += "|"
         row_output

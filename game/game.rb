@@ -9,7 +9,7 @@ class Game
         @game_is_playing = false
         @current_player = 1
         @board = Board.new
-        @valid_games = {"a0" => 0, "b0" => 1, "c0"=>2, "a1"=>3, "b1"=>4, "c1"=>5, "a2"=>6, "b2"=>7, "c2"=>8}
+        @valid_games = {"0" => 0, "1" => 1, "2"=>2, "3"=>3, "4"=>4, "5"=>5, "6"=>6, "7"=>7, "8"=>8}
     end
 
     attr_reader :game_is_playing, :current_player, :valid_games
@@ -17,7 +17,7 @@ class Game
 
 
     def current_symbol
-        return @current_player == 1 ? "x" : "o"
+        return @current_player == 1 ? "X" : "O"
     end
 
 
