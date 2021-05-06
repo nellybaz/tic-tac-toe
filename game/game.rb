@@ -82,6 +82,7 @@ class Game
 
     def get_and_validate_user_input
 
+        # If computer is playing, make move here
         game = gets.chomp
         while !self.is_valid_move(game)
             puts "Invalid move, retry"
