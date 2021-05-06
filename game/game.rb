@@ -38,7 +38,7 @@ class Game
         @board.draw
         @game_is_playing = true
         while @game_is_playing || true # TODO: implement the win, draw, or out of move function 
-            puts "Player #{@current_player}'s turn [e.g a0, b2, c1]:"
+            puts "Player #{@current_player}'s turn [1,4,7,0]:"
             game = gets.chomp
 
             while !self.is_valid_move(game)
@@ -46,9 +46,17 @@ class Game
                 game = gets.chomp
             end
 
-            # TODO: check if cell is empty
-
             cell = @valid_games[game]
+            current_cell = @board.get_cell(cell)
+            while current_cell == 'X' || current_cell == 'O'
+                puts 'Cell is not empty, please retry'
+                game = gets.chomp
+
+                #simply this
+                cell = @valid_games[game]
+                current_cell = @board.get_cell(cell)
+            end
+            
             @board.set_cell(cell, self.current_symbol)
             @board.draw
             self.next_player
@@ -57,6 +65,7 @@ class Game
         end
 
     end
+
 
 end
 

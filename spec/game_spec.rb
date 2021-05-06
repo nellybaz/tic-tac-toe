@@ -34,9 +34,9 @@ RSpec.describe Game do
 
     it "should return right symbol for right player" do
         game = Game.new
-        game.current_symbol.should == 'x'
+        game.current_symbol.should == 'X'
         game.next_player()
-        game.current_symbol.should == 'o'
+        game.current_symbol.should == 'O'
 
     end
     
