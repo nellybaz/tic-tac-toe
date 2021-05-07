@@ -4,43 +4,46 @@ require_relative '../game/game'
 RSpec.describe Game do
   it 'should initialize game with right defaults' do
     game = Game.new
-    game.current_player.should == 1
-    game.game_is_playing.should == false
-    game.valid_games.should == { '0' => 0, '1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6, '7' => 7,
-                                 '8' => 8 }
+    expect(game.current_player).to eq 1
+    expect(game.game_is_playing).to eq false
+    expected_valid_games = { '0' => 0, '1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6, '7' => 7,
+                             '8' => 8 }
+    expect(game.valid_games).to eq expected_valid_games
   end
 
   it 'should return true for valid moves' do
     game = Game.new
-    game.is_valid_move('1').should == true
-    game.is_valid_move('2').should == true
+    %w[1 2 3].each do |move|
+      expect(game.is_valid_move(move)).to eq true
+    end
   end
 
   it 'should return false for invalid moves' do
     game = Game.new
-    game.is_valid_move('10').should == false
-    game.is_valid_move('x').should == false
+    %w[10 x f].each do |move|
+      expect(game.is_valid_move(move)).to eq false
+    end
   end
 
   it 'should switch player' do
     game = Game.new
-    game.current_player.should == 1
-    game.next_player
-    game.current_player.should == 2
-    game.next_player
-    game.current_player.should == 1
+    [1, 2, 1].each do |player|
+      expect(game.current_player).to eq player
+      game.next_player
+    end
   end
 
   it 'should return right symbol for right player' do
     game = Game.new
-    game.current_symbol.should == 'X'
-    game.next_player
-    game.current_symbol.should == 'O'
+    %w[X O].each do |symbol|
+      expect(game.current_symbol).to eq symbol
+      game.next_player
+    end
   end
 
   it 'should return 4 as the computer move' do
     game = Game.new
     game.board.state = %w[X X X X 4 X X X X]
-    game.get_computer_move.should == 4
+    expect(game.get_computer_move).to eq 4
   end
 end
