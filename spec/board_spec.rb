@@ -17,6 +17,7 @@ RSpec.describe Board do
 
   it 'should set cell' do
     board = Board.new
+    expect(board.get_cell(0)).to eq '0'
     board.get_cell(0).should == '0'
     board.set_cell(0, 'X')
     board.get_cell(0).should == 'X'
