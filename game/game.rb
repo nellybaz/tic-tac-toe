@@ -83,7 +83,7 @@ class Game
         current_cell = @board.get_cell(cell)
         if %w[X O].include?(current_cell)
           puts current_cell
-          puts 'Invalid cell, retry'
+          puts 'Cell not empty, retry'
         else
           is_not_valid_cell = false
         end
