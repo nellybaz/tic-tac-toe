@@ -8,7 +8,6 @@ class Game
     @current_player = 1
     @board = Board.new
     @valid_games = { '0' => 0, '1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6, '7' => 7, '8' => 8 }
-    @againts_computer = false
   end
 
   attr_reader :game_is_playing, :current_player, :valid_games
@@ -30,10 +29,6 @@ class Game
   end
 
   def start
-    puts 'Enter Y to play against the computer'
-    decision = gets.chomp
-    @againts_computer = true if (decision == 'Y') || (decision == 'y')
-
     @board.draw
     @game_is_playing = true
     while @game_is_playing
@@ -46,13 +41,12 @@ class Game
       check_winner
       check_draw
       next_player
-      # @game_is_playing = false
 
     end
   end
 
   def game_turn_text
-    @againts_computer && @current_player == 1 ? "Computer's turn" : "Player #{@current_player}'s turn [1,4,7,0]"
+   "Player #{@current_player}'s turn [1,4,7,0]"
   end
 
   def check_winner
