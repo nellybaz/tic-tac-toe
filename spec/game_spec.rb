@@ -1,5 +1,5 @@
-require 'rspec'
-require_relative '../game/game'
+# require 'rspec'
+require_relative '../lib/tic-tac-toe/game'
 
 RSpec.describe Game do
   it 'should initialize game with right defaults' do
