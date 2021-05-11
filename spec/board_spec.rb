@@ -1,4 +1,4 @@
-require_relative '../game/board'
+require_relative '../lib/tic-tac-toe/board'
 
 RSpec.describe Board do
   [[0, '| 0 1 2 |'], [1, '| 3 4 5 |'], [2, '| 6 7 8 |']].each do |index, resolve|

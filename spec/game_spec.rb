@@ -1,5 +1,5 @@
 require 'rspec'
-require_relative '../game/game'
+require_relative '../lib/tic-tac-toe/game'
 
 RSpec.describe Game do
   it 'should initialize game with right defaults' do
@@ -14,14 +14,14 @@ RSpec.describe Game do
   it 'should return true for valid moves' do
     game = Game.new
     %w[1 2 3].each do |move|
-      expect(game.is_valid_move(move)).to eq true
+      expect(game.valid_move?(move)).to eq true
     end
   end
 
   it 'should return false for invalid moves' do
     game = Game.new
     %w[10 x f].each do |move|
-      expect(game.is_valid_move(move)).to eq false
+      expect(game.valid_move?(move)).to eq false
     end
   end
 
