@@ -29,10 +29,14 @@ class Game
                       end
   end
 
+  def user_input
+    gets.chomp
+  end
+
   def start
     puts 'Enter Y to play against the computer'
-    decision = gets.chomp
-    @againts_computer = true if (decision == 'Y') || (decision == 'y')
+    decision = user_input
+    @againts_computer = (decision == 'Y') || (decision == 'y')
 
     @board.draw
     @game_is_playing = true
@@ -92,12 +96,10 @@ class Game
     is_not_valid_move = true
     is_not_valid_cell = true
     while is_not_valid_move || is_not_valid_cell
-      # valid_move?(game) && current_cell != '' && %w[X O].include?(current_cell)
-      game = gets.chomp
+      game = user_input
       if valid_move?(game)
         is_not_valid_move = false
-        cell = @valid_games[game]
-        current_cell = @board.get_cell(cell)
+        current_cell = @board.get_cell(game.to_i)
         if %w[X O].include?(current_cell)
           puts 'Cell not empty, retry'
         else
@@ -107,7 +109,7 @@ class Game
         puts 'Invalid move, retry'
       end
     end
-    cell
+    game.to_i
   end
 
   def get_computer_move
