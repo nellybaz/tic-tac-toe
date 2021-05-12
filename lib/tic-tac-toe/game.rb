@@ -40,10 +40,12 @@ class Game
   end
 
   def choose_player
-    puts 'Do you want to play first?'
-    input = user_input
-    decision = (input == 'Y') || (input == 'y')
-    next_player if decision
+    if @againts_computer
+      puts 'Do you want to play first?'
+      input = user_input
+      decision = (input == 'Y') || (input == 'y')
+      next_player if decision
+    end
     @current_player
   end
 

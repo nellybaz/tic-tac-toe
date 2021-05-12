@@ -74,4 +74,13 @@ RSpec.describe Game do
     expect(game.choose_player).to eq 2
     expect(game.current_player).to eq 2
   end
+
+  it 'should have 1 returned by choose_player method if not playing against the computer' do
+    expect(game).to receive(:puts).with('Enter Y to play against the computer')
+    allow(game).to receive(:gets) { 'n' }
+    expect(game.play_against_computer).to eq 'n'
+    expect(game.againts_computer).to eq false
+    expect(game.choose_player).to eq 1
+    expect(game.current_player).to eq 1
+  end
 end

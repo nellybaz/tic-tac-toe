@@ -8,11 +8,11 @@ class Board
   # Draw board
   def draw
     # puts "  "+"abc"
-    puts '  ' + '-' * 7
+    puts "  #{'-' * 7}"
     [0, 1, 2].each do |index|
-      puts ' ' + get_row(index)
+      puts " #{get_row(index)}"
     end
-    puts '  ' + '-' * 7
+    puts "  #{'-' * 7}"
   end
 
   # Return content of a given row
@@ -20,7 +20,7 @@ class Board
     limit = 3 * index
     row_output = '| '
     (limit..limit + 3 - 1).each do |i|
-      row_output += @state[i] + ' '
+      row_output += "#{@state[i]} "
     end
     row_output += '|'
     row_output
