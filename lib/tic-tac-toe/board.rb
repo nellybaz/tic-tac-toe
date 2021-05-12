@@ -1,26 +1,43 @@
 class Board
-  def initialize
-    @state = %w[0 1 2 3 4 5 6 7 8] # TODO: initialize with indices
+  def initialize(size)
+    @size = size
+    @state = %w[0 1 2 3 4 5 6 7 8]
+    if size > 3
+      tmp = []
+      (0..size * size - 1).each do |index|
+        tmp << index
+      end
+      @state = tmp
+    end
   end
 
+  attr_reader :size
   attr_accessor :state
 
-  # Draw board
-  def draw
-    # puts "  "+"abc"
-    puts "  #{'-' * 7}"
-    [0, 1, 2].each do |index|
-      puts " #{get_row(index)}"
-    end
-    puts "  #{'-' * 7}"
+  def horizontal_border
+    boarder_length = get_row(0).length - 2
+    "  #{'-' * boarder_length}"
   end
 
-  # Return content of a given row
+  def row_content_space(index)
+    index > 9 ? ' ' * 3 : ' ' * 4
+  end
+
+  def draw
+    puts horizontal_border
+    (0..@size - 1).each do |index|
+      puts " #{get_row(index)}"
+    end
+    puts horizontal_border
+  end
+
   def get_row(index)
-    limit = 3 * index
+    limit = @size * index
+    space = row_content_space(0)
     row_output = '| '
-    (limit..limit + 3 - 1).each do |i|
-      row_output += "#{@state[i]} "
+    (limit..limit + @size - 1).each do |i|
+      space = row_content_space(i)
+      row_output += "#{@state[i]}#{space}"
     end
     row_output += '|'
     row_output

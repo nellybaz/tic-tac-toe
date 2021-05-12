@@ -5,19 +5,20 @@ class Game
     puts 'Welcome to Tic-Tac-Toe'
     @game_is_playing = false
     @current_player = 1
-    @board = Board.new
-    @valid_games = { '0' => 0, '1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6, '7' => 7, '8' => 8 }
+    @board = Board.new(3)
     @againts_computer = false
   end
 
-  attr_reader :game_is_playing, :current_player, :valid_games, :board, :againts_computer
+  attr_reader :game_is_playing, :current_player, :board, :againts_computer
 
   def current_symbol
     @current_player == 1 ? 'X' : 'O'
   end
 
   def valid_move?(game)
-    @valid_games.key?(game)
+    Float(game) && game.to_i < board.state.length && game.to_i >= 0
+  rescue StandardError
+    false
   end
 
   def next_player
@@ -49,7 +50,18 @@ class Game
     @current_player
   end
 
+  def change_board_size
+    puts 'Enter board size: [Minimum is 3]'
+    is_valid_size = false
+    until is_valid_size
+      input = user_input
+      is_valid_size = true if Float(input) && input.to_i >= 3
+    end
+    @board = Board.new(input.to_i)
+  end
+
   def start
+    change_board_size
     play_against_computer
     choose_player
     @board.draw
@@ -68,7 +80,6 @@ class Game
       @board.draw
       check_draw unless check_winner
       next_player
-
     end
   end
 

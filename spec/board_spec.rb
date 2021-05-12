@@ -3,20 +3,51 @@ require_relative '../lib/tic-tac-toe/board'
 RSpec.describe Board do
   board = nil
   before(:each) do
-    board = Board.new
+    board = Board.new(3)
   end
 
-  [[0, '| 0 1 2 |'], [1, '| 3 4 5 |'], [2, '| 6 7 8 |']].each do |index, resolve|
-    it "should get row #{index} of empty game state" do
+  it 'should get row content space' do
+    expect(board.row_content_space(0)).to eq ' ' * 4
+    expect(board.row_content_space(11)).to eq ' ' * 3
+  end
+
+  it 'should get rows of empty game state' do
+    space = board.row_content_space(0)
+    [[0, "| 0#{space}1#{space}2#{space}|"], [1, "| 3#{space}4#{space}5#{space}|"]].each do |index, resolve|
       expect(board.get_row(index)).to eq resolve
     end
+  end
+
+  it 'should set board size' do
+    board = Board.new(6)
+    expect(board.state.length).to eq 36
+  end
+
+  it 'should draw the board currently' do
+    expect(board).to receive(:puts).with(board.horizontal_border)
+    (0..board.size - 1).each do |index|
+      expect(board).to receive(:puts).with(" #{board.get_row(index)}")
+    end
+    expect(board).to receive(:puts).with(board.horizontal_border)
+
+    board.draw
+
+    board = Board.new(6)
+    expect(board).to receive(:puts).with(board.horizontal_border)
+    (0..board.size - 1).each do |index|
+      expect(board).to receive(:puts).with(" #{board.get_row(index)}")
+    end
+    expect(board).to receive(:puts).with(board.horizontal_border)
+
+    board.draw
   end
 
   it 'should set board state' do
     new_state = ['X', 'X', 'X', '.', '.', '.', '.', '.', '.']
     board.state = new_state
     expect(board.state).to eq new_state
-    expect(board.get_row(0)).to eq '| X X X |'
+    space = board.row_content_space(0)
+    expect(board.get_row(0)).to eq "| X#{space}X#{space}X#{space}|"
   end
 
   it 'should set cell' do
