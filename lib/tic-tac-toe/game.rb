@@ -3,7 +3,6 @@ require_relative './board'
 class Game
   def initialize
     puts 'Welcome to Tic-Tac-Toe'
-    puts
     @game_is_playing = false
     @current_player = 1
     @board = Board.new
@@ -11,7 +10,7 @@ class Game
     @againts_computer = false
   end
 
-  attr_reader :game_is_playing, :current_player, :valid_games, :board
+  attr_reader :game_is_playing, :current_player, :valid_games, :board, :againts_computer
 
   def current_symbol
     @current_player == 1 ? 'X' : 'O'
@@ -33,11 +32,15 @@ class Game
     gets.chomp
   end
 
-  def start
+  def play_against_computer
     puts 'Enter Y to play against the computer'
     decision = user_input
     @againts_computer = (decision == 'Y') || (decision == 'y')
+    decision
+  end
 
+  def start
+    play_against_computer
     @board.draw
     @game_is_playing = true
     while @game_is_playing
