@@ -2,7 +2,7 @@ require 'rspec'
 require_relative '../lib/tic-tac-toe/game'
 
 RSpec.describe Game do
-  game = Game.new
+  game = nil
   before(:each) do
     expect($stdout).to receive(:puts).with('Welcome to Tic-Tac-Toe')
     game = Game.new
@@ -54,5 +54,24 @@ RSpec.describe Game do
     allow(game).to receive(:gets) { 'Y' }
     expect(game.play_against_computer).to eq 'Y'
     expect(game.againts_computer).to eq true
+  end
+
+  it 'should have the against_computer property be false when user does not input Y' do
+    expect(game).to receive(:puts).with('Enter Y to play against the computer')
+    allow(game).to receive(:gets) { 'asd' }
+    expect(game.play_against_computer).to eq 'asd'
+    expect(game.againts_computer).to eq false
+  end
+
+  it 'should set current_player to 2 if human is playing first against computer' do
+    expect(game).to receive(:puts).with('Enter Y to play against the computer')
+    allow(game).to receive(:gets) { 'Y' }
+    expect(game.play_against_computer).to eq 'Y'
+    expect(game.againts_computer).to eq true
+
+    expect(game).to receive(:puts).with('Do you want to play first?')
+    allow(game).to receive(:gets) { 'Y' }
+    expect(game.choose_player).to eq 2
+    expect(game.current_player).to eq 2
   end
 end

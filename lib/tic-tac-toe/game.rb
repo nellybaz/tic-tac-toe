@@ -39,8 +39,17 @@ class Game
     decision
   end
 
+  def choose_player
+    puts 'Do you want to play first?'
+    input = user_input
+    decision = (input == 'Y') || (input == 'y')
+    next_player if decision
+    @current_player
+  end
+
   def start
     play_against_computer
+    choose_player
     @board.draw
     @game_is_playing = true
     while @game_is_playing
