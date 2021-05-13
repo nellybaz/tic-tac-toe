@@ -52,25 +52,23 @@ class Board
   end
 
   def in_winning_state(symbol)
+
     # check row
     winning_state = true
-
-    # index = 0
-    (0..2).each do |index|
-      limit = 3 * index
+    (0..@size - 1).each do |index|
+      limit = @size * index
       winning_state = true
-      (limit..limit + 3 - 1).each do |i|
+      (limit..limit + @size - 1).each do |i|
         if @state[i] != symbol
           winning_state = false
           break
         end
       end
-      # don't check again if there's a winning state in one row
       return winning_state if winning_state
 
       # check col
       winning_state = true
-      (index..index + 6).step(3) do |col_index|
+      (index..@state.length - 1).step(@size) do |col_index|
         if @state[col_index] != symbol
           winning_state = false
           break
@@ -79,20 +77,20 @@ class Board
       return winning_state if winning_state
     end
 
-    # check diagonals 1
-    winning_state = true
-    [0, 4, 8].each do |diag1|
-      winning_state = false if @state[diag1] != symbol
-    end
-    return winning_state if winning_state
+    diagonal_win(symbol)
+  end
 
-    # check diagonals 2
-    winning_state = true
-    [2, 4, 6].each do |diag2|
-      winning_state = false if @state[diag2] != symbol
+  def diagonal_win(symbol)
+    diag1 = 0
+    diag2 = 0
+    (0..@size - 1).each do |i|
+      (0..@size - 1).each do |j|
+        index = i * @size + j
+        diag1 += 1 if i == j && @state[index] == symbol
+        diag2 += 1 if i + j == @size - 1 && @state[index] == symbol
+      end
     end
-
-    winning_state
+    diag2 == @size || diag1 == @size
   end
 
   def in_draw_state

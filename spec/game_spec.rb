@@ -69,7 +69,7 @@ RSpec.describe Game do
     expect(game.play_against_computer).to eq 'Y'
     expect(game.againts_computer).to eq true
 
-    expect(game).to receive(:puts).with('Do you want to play first?')
+    expect(game).to receive(:puts).with('Do you want to play first? Y for yes')
     allow(game).to receive(:gets) { 'Y' }
     expect(game.choose_player).to eq 2
     expect(game.current_player).to eq 2

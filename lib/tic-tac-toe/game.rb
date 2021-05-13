@@ -42,7 +42,7 @@ class Game
 
   def choose_player
     if @againts_computer
-      puts 'Do you want to play first?'
+      puts 'Do you want to play first? Y for yes'
       input = user_input
       decision = (input == 'Y') || (input == 'y')
       next_player if decision
@@ -55,7 +55,16 @@ class Game
     is_valid_size = false
     until is_valid_size
       input = user_input
-      is_valid_size = true if Float(input) && input.to_i >= 3
+      begin
+        Float(input)
+        if input.to_i >= 3
+          is_valid_size = true
+        else
+          puts 'Invalid input, retry'
+        end
+      rescue StandardError
+        puts 'Invalid input, retry'
+      end
     end
     @board = Board.new(input.to_i)
   end

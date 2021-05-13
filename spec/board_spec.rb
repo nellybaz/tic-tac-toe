@@ -87,10 +87,12 @@ RSpec.describe Board do
   end
 
   it 'should be true for winning state in diagonals' do
-    [['X', '.', '.', '.', 'X', '.', '.', '.', 'X'],
-     ['0', '1', 'X', '.', 'X', '.', 'X', '.', '.'],
-     %w[0 1 2 3 4 5 X X X]].each do |new_state|
+    [
+      ['X', '.', '.', '.', 'X', '.', '.', '.', 'X'],
+      ['0', '1', 'X', '.', 'X', '.', 'X', '.', '.']
+    ].each do |new_state|
       board.state = new_state
+      expect(board.diagonal_win('X')).to eq true
       expect(board.in_winning_state('X')).to eq true
     end
   end
