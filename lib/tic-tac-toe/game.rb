@@ -1,10 +1,13 @@
 require_relative './board'
+require_relative './player'
 
 class Game
   def initialize
     puts 'Welcome to Tic-Tac-Toe'
     @game_is_playing = false
-    @current_player = 1
+    @player1 = Player.new('X', 1)
+    @player2 = Player.new('O', 2)
+    @current_player = @player1
     @board = Board.new(3)
     @againts_computer = false
   end
@@ -12,20 +15,14 @@ class Game
   attr_reader :game_is_playing, :current_player, :board, :againts_computer
 
   def current_symbol
-    @current_player == 1 ? 'X' : 'O'
-  end
-
-  def valid_move?(game)
-    Float(game) && game.to_i < board.state.length && game.to_i >= 0
-  rescue StandardError
-    false
+    @current_player.symbol
   end
 
   def next_player
-    @current_player = if @current_player == 1
-                        2
+    @current_player = if @current_player.id == 1
+                        @player2
                       else
-                        1
+                        @player1
                       end
   end
 
@@ -37,6 +34,7 @@ class Game
     puts 'Enter Y to play against the computer'
     decision = user_input
     @againts_computer = (decision == 'Y') || (decision == 'y')
+    @player2 = Player.new('O', 2, is_computer: true) if @againts_computer
     decision
   end
 
@@ -45,9 +43,9 @@ class Game
       puts 'Do you want to play first? Y for yes'
       input = user_input
       decision = (input == 'Y') || (input == 'y')
-      next_player if decision
+      next_player unless decision
     end
-    @current_player
+    @current_player.id
   end
 
   def change_board_size
@@ -77,34 +75,29 @@ class Game
     @game_is_playing = true
     while @game_is_playing
       puts game_turn_text
-
-      if @againts_computer && @current_player == 1
-        move = get_computer_move
-        cell = move
-      else
-        cell = get_and_validate_user_input
-      end
+      cell = @current_player.move(@board)
 
       @board.set_cell(cell, current_symbol)
       @board.draw
       check_draw unless check_winner
+      record_statistics
       next_player
     end
   end
 
   def game_turn_text
-    if @againts_computer && @current_player == 1
+    if @againts_computer && @current_player.is_computer
       "Computer's turn"
     else
-      @againts_computer && @current_player == 2 ? 'Your turn' : "Player #{@current_player}'s turn [e.g 1,4,7,0]"
+      @againts_computer && !@current_player.is_computer ? 'Your turn' : "Player #{@current_player.id}'s turn [e.g 1,4,7,0]"
     end
   end
 
   def game_winner_text
-    if @againts_computer && @current_player == 1
+    if @againts_computer && @current_player.is_computer
       '🤖 Computer 🤖 won'
     else
-      @againts_computer && @current_player == 2 ? 'You won' : "Player #{@current_player} won"
+      @againts_computer && !@current_player.is_computer ? 'You won' : "Player #{@current_player.id} won"
     end
   end
 
@@ -126,34 +119,22 @@ class Game
     end
   end
 
-  def get_and_validate_user_input
-    is_not_valid_move = true
-    is_not_valid_cell = true
-    while is_not_valid_move || is_not_valid_cell
-      game = user_input
-      if valid_move?(game)
-        is_not_valid_move = false
-        current_cell = @board.get_cell(game.to_i)
-        if %w[X O].include?(current_cell)
-          puts 'Cell not empty, retry'
-        else
-          is_not_valid_cell = false
-        end
-      else
-        puts 'Invalid move, retry'
-      end
-    end
-    game.to_i
-  end
+  def retrieve_statistics; end
 
-  def get_computer_move
-    move = rand(9)
-    current_cell = @board.get_cell(move)
-    while %w[X O].include?(current_cell)
-      move = rand(9)
-      current_cell = @board.get_cell(move)
+  def record_statistics
+    file_name = @againts_computer ? 'computer_record.txt' : 'human_record.txt'
+    player1_score = '0'
+    player2_score = '0'
+    begin
+      file_data = File.read(file_name).split
+      player1_score = file_data[0]
+      player2_score = file_data[1]
+
+      player1_score = player1_score.to_i + 1 if @current_player.id == 1
+      player2_score += player2_score.to_i + 1 if @current_player.id == 2
+    rescue StandardError
     end
-    puts "🤖 Computer played #{move} 🤖"
-    move
+
+    File.write(file_name, "#{player1_score} #{player2_score}", mode: 'w') unless @game_is_playing
   end
 end

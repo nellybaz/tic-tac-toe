@@ -30,7 +30,7 @@ RSpec.describe Game do
 
   it 'should switch player' do
     [1, 2, 1].each do |player|
-      expect(game.current_player).to eq player
+      expect(game.current_player.id).to eq player
       game.next_player
     end
   end
@@ -63,16 +63,16 @@ RSpec.describe Game do
     expect(game.againts_computer).to eq false
   end
 
-  it 'should set current_player to 2 if human is playing first against computer' do
+  it 'should set computer as current player if human is not playing first' do
     expect(game).to receive(:puts).with('Enter Y to play against the computer')
     allow(game).to receive(:gets) { 'Y' }
     expect(game.play_against_computer).to eq 'Y'
     expect(game.againts_computer).to eq true
 
     expect(game).to receive(:puts).with('Do you want to play first? Y for yes')
-    allow(game).to receive(:gets) { 'Y' }
-    expect(game.choose_player).to eq 2
-    expect(game.current_player).to eq 2
+    allow(game).to receive(:gets) { 'n' }
+    game.choose_player
+    expect(game.current_player.is_computer).to eq true
   end
 
   it 'should have 1 returned by choose_player method if not playing against the computer' do
@@ -81,7 +81,7 @@ RSpec.describe Game do
     expect(game.play_against_computer).to eq 'n'
     expect(game.againts_computer).to eq false
     expect(game.choose_player).to eq 1
-    expect(game.current_player).to eq 1
+    expect(game.current_player.id).to eq 1
   end
 
   it 'should change set board size to user input' do
