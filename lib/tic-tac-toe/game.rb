@@ -1,5 +1,6 @@
 require_relative './board'
 require_relative './player'
+require_relative './score'
 
 class Game
   def initialize
@@ -9,10 +10,11 @@ class Game
     @player2 = Player.new('O', 2)
     @current_player = @player1
     @board = Board.new(3)
-    @againts_computer = false
+    @against_computer = false
+    @score = Score.new
   end
 
-  attr_reader :game_is_playing, :current_player, :board, :againts_computer
+  attr_reader :game_is_playing, :current_player, :board, :against_computer, :score
 
   def current_symbol
     @current_player.symbol
@@ -33,13 +35,13 @@ class Game
   def play_against_computer
     puts 'Enter Y to play against the computer'
     decision = user_input
-    @againts_computer = (decision == 'Y') || (decision == 'y')
-    @player2 = Player.new('O', 2, is_computer: true) if @againts_computer
+    @against_computer = (decision == 'Y') || (decision == 'y')
+    @player2 = Player.new('O', 2, is_computer: true) if @against_computer
     decision
   end
 
   def choose_player
-    if @againts_computer
+    if @against_computer
       puts 'Do you want to play first? Y for yes'
       input = user_input
       decision = (input == 'Y') || (input == 'y')
@@ -71,6 +73,7 @@ class Game
     change_board_size
     play_against_computer
     choose_player
+    print_scores
     @board.draw
     @game_is_playing = true
     while @game_is_playing
@@ -80,24 +83,24 @@ class Game
       @board.set_cell(cell, current_symbol)
       @board.draw
       check_draw unless check_winner
-      record_statistics
-      next_player
+      next_player if @game_is_playing
     end
+    @score.record_statistics(@current_player.id)
   end
 
   def game_turn_text
-    if @againts_computer && @current_player.is_computer
+    if @against_computer && @current_player.is_computer
       "Computer's turn"
     else
-      @againts_computer && !@current_player.is_computer ? 'Your turn' : "Player #{@current_player.id}'s turn [e.g 1,4,7,0]"
+      @against_computer && !@current_player.is_computer ? 'Your turn' : "Player #{@current_player.id}'s turn [e.g 1,4,7,0]"
     end
   end
 
   def game_winner_text
-    if @againts_computer && @current_player.is_computer
+    if @against_computer && @current_player.is_computer
       '🤖 Computer 🤖 won'
     else
-      @againts_computer && !@current_player.is_computer ? 'You won' : "Player #{@current_player.id} won"
+      @against_computer && !@current_player.is_computer ? 'You won' : "Player #{@current_player.id} won"
     end
   end
 
@@ -119,22 +122,7 @@ class Game
     end
   end
 
-  def retrieve_statistics; end
-
-  def record_statistics
-    file_name = @againts_computer ? 'computer_record.txt' : 'human_record.txt'
-    player1_score = '0'
-    player2_score = '0'
-    begin
-      file_data = File.read(file_name).split
-      player1_score = file_data[0]
-      player2_score = file_data[1]
-
-      player1_score = player1_score.to_i + 1 if @current_player.id == 1
-      player2_score += player2_score.to_i + 1 if @current_player.id == 2
-    rescue StandardError
-    end
-
-    File.write(file_name, "#{player1_score} #{player2_score}", mode: 'w') unless @game_is_playing
+  def print_scores
+    @score.retrieve_statistics
   end
 end

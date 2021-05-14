@@ -23,32 +23,37 @@ RSpec.describe Game do
     end
   end
 
+  it 'should verify that scores are initialized to zero' do
+    expect(game.score.player1).to eq 0
+    expect(game.score.player2).to eq 0
+  end
+
   it 'should return right symbol for right player' do
     %w[X O].each do |symbol|
       expect(game.current_symbol).to eq symbol
       game.next_player
     end
   end
-  
+
   it 'should have the against_computer property be true when user inputs Y' do
     expect(game).to receive(:puts).with('Enter Y to play against the computer')
     allow(game).to receive(:gets) { 'Y' }
     expect(game.play_against_computer).to eq 'Y'
-    expect(game.againts_computer).to eq true
+    expect(game.against_computer).to eq true
   end
 
   it 'should have the against_computer property be false when user does not input Y' do
     expect(game).to receive(:puts).with('Enter Y to play against the computer')
     allow(game).to receive(:gets) { 'asd' }
     expect(game.play_against_computer).to eq 'asd'
-    expect(game.againts_computer).to eq false
+    expect(game.against_computer).to eq false
   end
 
   it 'should set computer as current player if human is not playing first' do
     expect(game).to receive(:puts).with('Enter Y to play against the computer')
     allow(game).to receive(:gets) { 'Y' }
     expect(game.play_against_computer).to eq 'Y'
-    expect(game.againts_computer).to eq true
+    expect(game.against_computer).to eq true
 
     expect(game).to receive(:puts).with('Do you want to play first? Y for yes')
     allow(game).to receive(:gets) { 'n' }
@@ -60,7 +65,7 @@ RSpec.describe Game do
     expect(game).to receive(:puts).with('Enter Y to play against the computer')
     allow(game).to receive(:gets) { 'n' }
     expect(game.play_against_computer).to eq 'n'
-    expect(game.againts_computer).to eq false
+    expect(game.against_computer).to eq false
     expect(game.choose_player).to eq 1
     expect(game.current_player.id).to eq 1
   end
