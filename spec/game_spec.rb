@@ -16,18 +16,6 @@ RSpec.describe Game do
   #   expect(game.valid_games).to eq expected_valid_games
   # end
 
-  it 'should return true for valid moves' do
-    %w[1 2 3].each do |move|
-      expect(game.valid_move?(move)).to eq true
-    end
-  end
-
-  it 'should return false for invalid moves' do
-    %w[10 x f].each do |move|
-      expect(game.valid_move?(move)).to eq false
-    end
-  end
-
   it 'should switch player' do
     [1, 2, 1].each do |player|
       expect(game.current_player.id).to eq player
@@ -41,14 +29,7 @@ RSpec.describe Game do
       game.next_player
     end
   end
-
-  it 'should return 4 as the computer move' do
-    expect($stdout).to receive(:puts).with('🤖 Computer played 4 🤖')
-
-    game.board.state = %w[X X X X 4 X X X X]
-    expect(game.get_computer_move).to eq 4
-  end
-
+  
   it 'should have the against_computer property be true when user inputs Y' do
     expect(game).to receive(:puts).with('Enter Y to play against the computer')
     allow(game).to receive(:gets) { 'Y' }

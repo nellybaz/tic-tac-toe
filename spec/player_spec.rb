@@ -31,4 +31,19 @@ RSpec.describe Player do
     board.state = %w[X X X X 4 X X X X]
     expect(player.move(board)).to eq 4
   end
+
+  it 'should return true for valid moves' do
+    player = Player.new('X', 1)
+    %w[1 2 3].each do |move|
+      expect(player.valid_move?(move)).to eq true
+    end
+  end
+
+
+  it 'should return false for invalid moves' do
+    player = Player.new('X', 1)
+    ['x', '=', 'a'].each do |move|
+      expect(player.valid_move?(move)).to eq false
+    end
+  end
 end
