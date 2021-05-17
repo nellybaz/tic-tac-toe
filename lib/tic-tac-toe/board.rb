@@ -52,7 +52,6 @@ class Board
   end
 
   def in_winning_state(symbol)
-
     # check row
     winning_state = true
     (0..@size - 1).each do |index|

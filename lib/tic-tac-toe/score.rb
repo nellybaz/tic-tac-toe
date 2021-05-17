@@ -15,8 +15,11 @@ class Score
   def retrieve_content_keys(key = 'human')
     json_content = JSON.parse @file_data
     content = json_content[key]
-    keys = content.keys
-    [[keys[0], content[keys[0]]], [keys[1], content[keys[1]]]]
+    output = []
+    content.each_key do |game_key|
+      output << [game_key, content[game_key]]
+    end
+    output
   rescue StandardError => e
     puts 'Error from retrieve content keys'
     print e
