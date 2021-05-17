@@ -85,7 +85,11 @@ class Game
       check_draw unless check_winner
       next_player if @game_is_playing
     end
-    @score.record_statistics(@current_player.id)
+    @score.record_statistics(game_score_key, @current_player.id - 1)
+  end
+
+  def game_score_key
+    @against_computer ? 'computer' : 'human'
   end
 
   def game_turn_text
