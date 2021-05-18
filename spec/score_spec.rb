@@ -4,33 +4,31 @@ file_name = 'scores.json'
 require 'json'
 
 RSpec.describe Score do
-  score = nil
-  file = nil
-  content_json = nil
-  score_content = nil
-  before(:each) do
-    score_content = '{
-            "human": {
-              "player1": 3,
-              "player2": 2,
-              "draw":0
-            },
-            "computer": {
-              "human": 0,
-              "computer": 0,
-              "draw":0
-            },
-            "smart_computer": {
-              "human": 1,
-              "computer": 1,
-              "draw":0
-            }
-          }'
-    content_json = JSON.parse score_content
-    file = double(File)
-    expect(file).to receive(:read).with(file_name).and_return(score_content)
-    score = Score.new(file)
+  let(:score) { Score.new(file) }
+  let(:file) { double(File, read: score_content) }
+  let(:content_json) { JSON.parse score_content }
+  let(:score_content) do
+    '{
+        "human": {
+          "player1": 3,
+          "player2": 2,
+          "draw":0
+        },
+        "computer": {
+          "human": 0,
+          "computer": 0,
+          "draw":0
+        },
+        "smart_computer": {
+          "human": 1,
+          "computer": 1,
+          "draw":0
+        }
+      }'
   end
+#   before(:each) do
+#     allow(file).to receive(:read).with(file_name).and_return(score_content)
+#   end
 
   it 'should print game scores correctly' do
     expect(score).to receive(:puts).with("=======\nScores\n\n\nHUMAN\n\nplayer1: 3\nplayer2: 2\ndraw: 0\n\nCOMPUTER\n\nhuman: 0\ncomputer: 0\ndraw: 0\n\nSMART_COMPUTER\n\nhuman: 1\ncomputer: 1\ndraw: 0\n=======\n")
