@@ -53,4 +53,9 @@ class Player
   rescue StandardError
     false
   end
+
+
+  def smart_computer_move(board)
+    4
+  end
 end

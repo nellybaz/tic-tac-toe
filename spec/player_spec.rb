@@ -1,4 +1,5 @@
 require_relative '../lib/tic-tac-toe/player'
+require_relative '../lib/tic-tac-toe/board'
 
 RSpec.describe Player do
   it 'should initialize a humam player with X symbol' do
@@ -45,5 +46,12 @@ RSpec.describe Player do
     ['x', '=', 'a'].each do |move|
       expect(player.valid_move?(move)).to eq false
     end
+  end
+
+  it 'should return best move for smart computer' do
+    player = Player.new('X', 1)
+    board = Board.new(3)
+    board.state = %w[X X X X 4 X X X X]
+    expect(player.smart_computer_move(board)).to eq 4
   end
 end

@@ -52,7 +52,16 @@ class Board
   end
 
   def in_winning_state(symbol)
-    # check row
+    row = row_win?(symbol)
+    return row if row
+
+    col = col_win?(symbol)
+    return col if col
+
+    diagonal_win(symbol)
+  end
+
+  def row_win?(symbol)
     winning_state = true
     (0..@size - 1).each do |index|
       limit = @size * index
@@ -64,8 +73,13 @@ class Board
         end
       end
       return winning_state if winning_state
+    end
+    false
+  end
 
-      # check col
+  def col_win?(symbol)
+    winning_state = true
+    (0..@size - 1).each do |index|
       winning_state = true
       (index..@state.length - 1).step(@size) do |col_index|
         if @state[col_index] != symbol
@@ -75,8 +89,7 @@ class Board
       end
       return winning_state if winning_state
     end
-
-    diagonal_win(symbol)
+    false
   end
 
   def diagonal_win(symbol)
@@ -98,5 +111,29 @@ class Board
       count += 1 if %w[X O].include?(item)
     end
     count == @state.length
+  end
+
+  def moves_left?
+    (0..@size - 1).each do |i|
+      (0..@size - 1).each do |j|
+        index = i * @size + j
+        return true if numeric?(@state[index])
+      end
+    end
+    false
+  end
+
+  def numeric?(val)
+    Float(val)
+    true
+  rescue StandardError
+    false
+  end
+
+  def minimax_evaluate_board
+    return 1 if diagonal_win('X') || row_win?('X') || col_win?('X')
+    return -1 if diagonal_win('O') || row_win?('O') || col_win?('O')
+
+    0
   end
 end

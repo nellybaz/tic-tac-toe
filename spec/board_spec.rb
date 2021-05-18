@@ -61,29 +61,29 @@ RSpec.describe Board do
      ['0', '1', '2', 'X', 'X', 'X', '.', '.', '.'],
      %w[0 1 2 3 4 5 X X X]].each do |new_state|
       board.state = new_state
-      expect(board.in_winning_state('X')).to eq true
+      expect(board.row_win?('X')).to eq true
     end
   end
 
   it 'should be true for winning state in cols' do
     [['X', '.', '.', 'X', '.', '.', 'X', '.', '.'],
      ['0', 'X', '2', '.', 'X', '.', '.', 'X', '.'],
-     %w[0 1 2 3 4 5 X X X]].each do |new_state|
+     %w[0 1 X 3 4 X 6 7 X]].each do |new_state|
       board.state = new_state
-      expect(board.in_winning_state('X')).to eq true
+      expect(board.col_win?('X')).to eq true
     end
   end
 
   it 'should be false for non-winning state in rows' do
     new_state = ['X', 'O', 'X', '.', '.', '.', '.', '.', '.']
     board.state = new_state
-    expect(board.in_winning_state('X')).to eq false
+    expect(board.row_win?('X')).to eq false
   end
 
   it 'should be false for non-winning state in cols' do
     new_state = ['X', 'O', 'X', 'X', '.', '.', '.', '.', '.']
     board.state = new_state
-    expect(board.in_winning_state('X')).to eq false
+    expect(board.col_win?('X')).to eq false
   end
 
   it 'should be true for winning state in diagonals' do
@@ -93,7 +93,7 @@ RSpec.describe Board do
     ].each do |new_state|
       board.state = new_state
       expect(board.diagonal_win('X')).to eq true
-      expect(board.in_winning_state('X')).to eq true
+      expect(board.diagonal_win('X')).to eq true
     end
   end
 
@@ -107,5 +107,24 @@ RSpec.describe Board do
     new_state = ['X', '.', '.', '.', 'X', '.', '.', '.', 'X']
     board.state = new_state
     expect(board.in_draw_state).to eq false
+  end
+
+  it 'should test for moves left' do
+    board.state = %w[O O X X X O O X 8]
+    expect(board.moves_left?).to eq true
+
+    board.state = %w[O O X X X O O X X]
+    expect(board.moves_left?).to eq false
+  end
+
+  it 'should return corerct minimax board evaluation for players' do
+    board.state = ['0', '1', 'X', '.', 'X', '.', 'X', '.', '.']
+    expect(board.minimax_evaluate_board).to eq 1
+
+    board.state = ['0', '1', 'O', '.', 'O', '.', 'O', '.', '.']
+    expect(board.minimax_evaluate_board).to eq(-1)
+
+    board.state = %w[O O X X X O O X X]
+    expect(board.minimax_evaluate_board).to eq 0
   end
 end
