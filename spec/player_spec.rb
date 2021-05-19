@@ -51,7 +51,11 @@ RSpec.describe Player do
   it 'should return best move for smart computer' do
     player = Player.new('X', 1)
     board = Board.new(3)
-    board.state = %w[X X X X 4 X X X X]
-    expect(player.smart_computer_move(board)).to eq 4
+    board.state = %w[X O X O O X 6 7 8]
+    expect(player.smart_computer_move(board)).to eq 8
+
+    # player = Player.new('O', 1)
+    # board.state = %w[0 X 2 3 X O 6 7 O]
+    # expect(player.smart_computer_move(board)).to eq 7
   end
 end

@@ -1,9 +1,10 @@
 # A player class
 class Player
-  def initialize(symbol, id, is_computer: false)
+  def initialize(symbol, id, is_computer: false, is_smart_computer: false)
     @symbol = symbol
     @id = id
     @is_computer = is_computer
+    @is_smart_computer = is_smart_computer
   end
 
   attr_reader :is_computer, :symbol, :id
@@ -13,7 +14,11 @@ class Player
   end
 
   def move(board)
-    @is_computer ? computer_move(board) : human_move(board)
+    return smart_computer_move(board) if @is_smart_computer
+
+    return computer_move(board) if @is_computer
+
+    human_move(board)
   end
 
   def computer_move(board)
@@ -73,10 +78,50 @@ class Player
         end
       end
     end
+    puts "🤖 Computer played #{best_move} 🤖"
     best_move
   end
 
-  def minimax(board, depth, isMax)
-    4
+  def minimax(board, depth, is_max)
+    score = board.minimax_evaluate_board
+    return score if score == 10
+
+    return score if score == -10
+
+    return 0 if board.moves_left? == false
+
+    if is_max
+      best = -Float::INFINITY
+      # -1000
+
+      (0..board.size - 1).each do |i|
+        (0..board.size - 1).each do |j|
+          index = i * board.size + j
+          next unless board.numeric?(board.state[index])
+
+          board.set_cell(index, @symbol)
+
+          best = [best, minimax(board, depth + 1, !is_max)].max
+
+          board.set_cell(index, index.to_s)
+        end
+      end
+      best
+    else
+      best = Float::INFINITY
+      (0..board.size - 1).each do |i|
+        (0..board.size - 1).each do |j|
+          index = i * board.size + j
+          next unless board.numeric?(board.state[index])
+
+          board.set_cell(index, @symbol == 'X' ? 'O' : 'X')
+
+          best = [best, minimax(board, depth + 1, !is_max)].min
+
+          board.set_cell(index, index.to_s)
+        end
+      end
+    end
+    best
   end
 end

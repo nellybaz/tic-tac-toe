@@ -119,10 +119,10 @@ RSpec.describe Board do
 
   it 'should return corerct minimax board evaluation for players' do
     board.state = ['0', '1', 'X', '.', 'X', '.', 'X', '.', '.']
-    expect(board.minimax_evaluate_board).to eq 1
+    expect(board.minimax_evaluate_board).to eq 10
 
     board.state = ['0', '1', 'O', '.', 'O', '.', 'O', '.', '.']
-    expect(board.minimax_evaluate_board).to eq(-1)
+    expect(board.minimax_evaluate_board).to eq(-10)
 
     board.state = %w[O O X X X O O X X]
     expect(board.minimax_evaluate_board).to eq 0
