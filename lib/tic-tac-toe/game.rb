@@ -12,6 +12,7 @@ class Game
     @board = Board.new(3)
     @against_computer = false
     @score = Score.new
+    @is_draw = false
   end
 
   attr_reader :game_is_playing, :current_player, :board, :against_computer, :score
@@ -85,7 +86,12 @@ class Game
       check_draw unless check_winner
       next_player if @game_is_playing
     end
-    @score.record_statistics(@current_player.id)
+    winner_id = @is_draw ? -1 : @current_player.id - 1
+    @score.record_statistics(game_score_key, winner_id)
+  end
+
+  def game_score_key
+    @against_computer ? 'computer' : 'human'
   end
 
   def game_turn_text
@@ -115,8 +121,9 @@ class Game
   end
 
   def check_draw
-    if @board.in_draw_state
+    if @game_is_playing && @board.in_draw_state
       @game_is_playing = false
+      @is_draw = true
       puts "It's a draw"
       puts 'Game over 😎'
     end
