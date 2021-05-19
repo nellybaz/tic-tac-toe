@@ -71,8 +71,8 @@ class Game
   end
 
   def start
-    change_board_size
-    play_against_computer
+    # change_board_size
+    # play_against_computer
     choose_player
     print_scores
     @board.draw

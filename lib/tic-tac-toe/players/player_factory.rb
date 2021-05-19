@@ -3,7 +3,7 @@ require_relative './human_player'
 require_relative './smart_computer_player'
 
 class PlayerFactory
-  def self.make(key, id: 1, symbol: 'X')
+  def self.make(key: 'h', id: 1, symbol: 'X')
     case key
     when 'c'
       ComputerPlayer.new(id, symbol)

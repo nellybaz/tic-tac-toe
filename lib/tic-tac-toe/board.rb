@@ -117,13 +117,13 @@ class Board
     (0..@size - 1).each do |i|
       (0..@size - 1).each do |j|
         index = i * @size + j
-        return true if numeric?(@state[index])
+        return true if valid_move?(@state[index])
       end
     end
     false
   end
 
-  def numeric?(val)
+  def valid_move?(val)
     Float(val)
     true
   rescue StandardError
@@ -135,5 +135,9 @@ class Board
     return -10 if diagonal_win('O') || row_win?('O') || col_win?('O')
 
     0
+  end
+
+  def valid_move(value)
+
   end
 end

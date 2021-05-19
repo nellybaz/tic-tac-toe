@@ -67,7 +67,7 @@ class Player
     (0..board.size - 1).each do |i|
       (0..board.size - 1).each do |j|
         index = i * board.size + j
-        next unless board.numeric?(board.state[index])
+        next unless board.valid_move?(board.state[index])
 
         board.set_cell(index, @symbol)
         move_val = minimax(board, 0, false)
@@ -98,7 +98,7 @@ class Player
       (0..board.size - 1).each do |i|
         (0..board.size - 1).each do |j|
           index = i * board.size + j
-          next unless board.numeric?(board.state[index])
+          next unless board.valid_move?(board.state[index])
 
           board.set_cell(index, @symbol)
 
@@ -113,7 +113,7 @@ class Player
       (0..board.size - 1).each do |i|
         (0..board.size - 1).each do |j|
           index = i * board.size + j
-          next unless board.numeric?(board.state[index])
+          next unless board.valid_move?(board.state[index])
 
           board.set_cell(index, @symbol == 'X' ? 'O' : 'X')
 

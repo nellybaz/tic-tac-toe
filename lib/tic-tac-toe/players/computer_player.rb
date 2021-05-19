@@ -4,7 +4,10 @@ class ComputerPlayer
     @symbol = symbol
   end
 
-  def move
+  attr_reader :id, :symbol
+
+  def move(board)
     puts 'computer player move'
+    2
   end
 end

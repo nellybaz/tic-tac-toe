@@ -1,8 +1,8 @@
 require_relative './game'
-require_relative './player_factory'
+require_relative './players/player_factory'
+require_relative './board'
 
 class GameBuilder
-
   def board_size
     puts 'Enter the size of the game'
     input = gets.chomp
@@ -17,19 +17,19 @@ class GameBuilder
   end
 
   def game_opponent
-    puts 'Choose opponent. [c for computer, C for smart computer, h for human]'
+    puts 'Choose opponent. [c for computer, s for smart computer, h for human]'
     input = gets.chomp
     puts 'Invalid opponent key' unless valid_opponent_key input
-    nil
+    PlayerFactory.make(key: input, id: 2, symbol: 'O')
   end
 
   def valid_opponent_key(value)
     %w[c s h].include?(value)
   end
 
-  def run
-    build_board_size
-    game_opponent
-    Game.new(Player)
+  def create
+    player = PlayerFactory.make(key: 'h', id: 1, symbol: 'X')
+    board = Board.new(board_size)
+    Game.new(player, game_opponent, board).start
   end
 end

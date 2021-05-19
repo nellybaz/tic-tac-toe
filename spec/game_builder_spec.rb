@@ -1,5 +1,8 @@
 require_relative '../lib/tic-tac-toe/game_builder'
-game_opponent_text = 'Choose opponent. [c for computer, C for smart computer, h for human]'
+require_relative '../lib/tic-tac-toe/players/human_player'
+
+
+game_opponent_text = 'Choose opponent. [c for computer, s for smart computer, h for human]'
 
 
 RSpec.describe GameBuilder do
@@ -26,7 +29,7 @@ RSpec.describe GameBuilder do
   end
 
   it 'returns error on invalid game opponent key' do
-    expect(game_builder).to receive(:puts).with('Choose opponent. [c for computer, C for smart computer, h for human]')
+    expect(game_builder).to receive(:puts).with(game_opponent_text)
     allow(game_builder).to receive(:gets) { 'k' }
     expect(game_builder).to receive(:puts).with('Invalid opponent key')
     game_builder.game_opponent
@@ -35,7 +38,7 @@ RSpec.describe GameBuilder do
   it 'oponent should be human player when h is choosen' do
     expect(game_builder).to receive(:puts).with(game_opponent_text)
     allow(game_builder).to receive(:gets) { 'h' }
-    expect(game_builder.game_opponent).to eq nil
+    expect(game_builder.game_opponent).to be_instance_of HumanPlayer
   end
 
   it 'test valid board size' do

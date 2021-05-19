@@ -127,4 +127,8 @@ RSpec.describe Board do
     board.state = %w[O O X X X O O X X]
     expect(board.minimax_evaluate_board).to eq 0
   end
+
+  it 'checks valid move' do
+    expect(board.valid_move?('3')).to eq true
+  end
 end
