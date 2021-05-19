@@ -3,13 +3,13 @@ require_relative './player'
 require_relative './score'
 
 class Game
-  def initialize
+  def initialize(player1 = Player.new('X', 1), player2 = Player.new('O', 2), board = Board.new(3))
     puts 'Welcome to Tic-Tac-Toe'
     @game_is_playing = false
-    @player1 = Player.new('X', 1)
-    @player2 = Player.new('O', 2)
+    @player1 = player1
+    @player2 = player2
     @current_player = @player1
-    @board = Board.new(3)
+    @board = board
     @against_computer = false
     @score = Score.new
     @is_draw = false

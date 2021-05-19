@@ -8,22 +8,21 @@ RSpec.describe GameBuilder do
   it 'builds board size from input' do
     expect(game_builder).to receive(:puts).with('Enter the size of the game')
     allow(game_builder).to receive(:gets) { '5' }
-    game_builder.build_board_size
-    expect(game_builder.game_baord_size).to eq 5
+    expect(game_builder.board_size).to eq 5
   end
 
   it 'returns an error on board size less than 3' do
     expect(game_builder).to receive(:puts).with('Enter the size of the game')
     allow(game_builder).to receive(:gets) { '2' }
     expect(game_builder).to receive(:puts).with('Invalid board size')
-    game_builder.build_board_size
+    game_builder.board_size
   end
 
   it 'returns an error on wrong board size' do
     expect(game_builder).to receive(:puts).with('Enter the size of the game')
     allow(game_builder).to receive(:gets) { '1' }
     expect(game_builder).to receive(:puts).with('Invalid board size')
-    game_builder.build_board_size
+    game_builder.board_size
   end
 
   it 'returns error on invalid game opponent key' do

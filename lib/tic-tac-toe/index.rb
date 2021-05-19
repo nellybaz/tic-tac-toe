@@ -1,4 +1,5 @@
-require_relative './game'
+require_relative './game_builder'
 
 
-Game.new.start
+# Game.new.start
+GameBuilder.run

@@ -1,15 +1,13 @@
+require_relative './game'
+require_relative './player_factory'
+
 class GameBuilder
-  def initialize
-    @game_baord_size = 3
-  end
 
-  attr_reader :game_baord_size
-
-  def build_board_size
+  def board_size
     puts 'Enter the size of the game'
     input = gets.chomp
     puts 'Invalid board size' unless valid_size input
-    @game_baord_size = input.to_i
+    input.to_i
   end
 
   def valid_size(value)
@@ -27,5 +25,11 @@ class GameBuilder
 
   def valid_opponent_key(value)
     %w[c s h].include?(value)
+  end
+
+  def run
+    build_board_size
+    game_opponent
+    Game.new(Player)
   end
 end
