@@ -1,7 +1,5 @@
 require_relative './board'
 require_relative './players/player_factory'
-# require_relative './players/computer_player'
-# require_relative './players/player_factory'
 require_relative './score'
 
 class Game

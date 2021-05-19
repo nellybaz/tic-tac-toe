@@ -137,7 +137,9 @@ class Board
     0
   end
 
-  def valid_move(value)
-
+  def self.valid_baord_size?(value)
+    Float(value) && value.to_i > 2
+  rescue StandardError
+    false
   end
 end

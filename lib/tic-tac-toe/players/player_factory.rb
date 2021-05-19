@@ -15,4 +15,8 @@ class PlayerFactory
       HumanPlayer.new(id, symbol)
     end
   end
+
+  def self.valid_player_key?(value)
+    %w[c s h].include?(value)
+  end
 end

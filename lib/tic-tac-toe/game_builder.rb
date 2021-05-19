@@ -6,25 +6,15 @@ class GameBuilder
   def board_size
     puts 'Enter the size of the game'
     input = gets.chomp
-    puts 'Invalid board size' unless valid_size input
+    puts 'Invalid board size' unless Board.valid_baord_size? input
     input.to_i
-  end
-
-  def valid_size(value)
-    Float(value) && value.to_i > 2
-  rescue StandardError
-    false
   end
 
   def game_opponent
     puts 'Choose opponent. [c for computer, s for smart computer, h for human]'
     input = gets.chomp
-    puts 'Invalid opponent key' unless valid_opponent_key input
+    puts 'Invalid opponent key' unless PlayerFactory.valid_player_key? input
     PlayerFactory.make(key: input, id: 2, symbol: 'O')
-  end
-
-  def valid_opponent_key(value)
-    %w[c s h].include?(value)
   end
 
   def create

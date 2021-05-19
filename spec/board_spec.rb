@@ -131,4 +131,10 @@ RSpec.describe Board do
   it 'checks valid move' do
     expect(board.valid_move?('3')).to eq true
   end
+
+  it 'test valid board size' do
+    [[3, true], [2, false], ['d', false]].each do |size, resolve|
+      expect(Board.valid_baord_size?(size)).to eq resolve
+    end
+  end
 end
