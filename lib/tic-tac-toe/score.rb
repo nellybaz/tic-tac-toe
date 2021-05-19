@@ -26,6 +26,7 @@ class Score
     []
   end
 
+  # TODO: does two things, hint: refactor
   def retrieve_statistics
     json_content = JSON.parse @file_data
     output = "=======\nScores\n\n"

@@ -36,7 +36,7 @@ class Player
     is_not_valid_move = true
     is_not_valid_cell = true
     while is_not_valid_move || is_not_valid_cell
-      game = user_input
+      game = user_input # TODO: 'game' variable name to maybe user_move
       if valid_move?(game)
         is_not_valid_move = false
         current_cell = board.get_cell(game.to_i)
@@ -52,6 +52,7 @@ class Player
     game.to_i
   end
 
+  # Repeated in board class
   def valid_move?(game)
     Float(game)
     true
