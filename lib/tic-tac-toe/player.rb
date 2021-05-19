@@ -54,8 +54,29 @@ class Player
     false
   end
 
-
   def smart_computer_move(board)
+    best_val = -1000
+    best_move = -1
+
+    (0..board.size - 1).each do |i|
+      (0..board.size - 1).each do |j|
+        index = i * board.size + j
+        next unless board.numeric?(board.state[index])
+
+        board.set_cell(index, @symbol)
+        move_val = minimax(board, 0, false)
+        board.set_cell(index, index.to_s)
+
+        if move_val > best_val
+          best_move = index
+          best_val = move_val
+        end
+      end
+    end
+    best_move
+  end
+
+  def minimax(board, depth, isMax)
     4
   end
 end
