@@ -10,7 +10,7 @@ class HumanPlayer
     is_not_valid_move = true
     is_not_valid_cell = true
     while is_not_valid_move || is_not_valid_cell
-      user_move = user_input # TODO: 'user_move' variable name to maybe user_move
+      user_move = gets.chomp
       if board.valid_move?(user_move)
         is_not_valid_move = false
         current_cell = board.get_cell(user_move.to_i)
