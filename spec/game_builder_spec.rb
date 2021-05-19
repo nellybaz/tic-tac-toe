@@ -26,15 +26,28 @@ RSpec.describe GameBuilder do
     game_builder.build_board_size
   end
 
-  xit 'returns error on invalid game opponent key' do
+  it 'returns error on invalid game opponent key' do
     expect(game_builder).to receive(:puts).with('Choose opponent. [c for computer, C for smart computer, h for human]')
-
+    allow(game_builder).to receive(:gets) { 'k' }
+    expect(game_builder).to receive(:puts).with('Invalid opponent key')
+    game_builder.game_opponent
   end
 
   it 'oponent should be human player when h is choosen' do
     expect(game_builder).to receive(:puts).with(game_opponent_text)
-    allow(game_builder).to receive(:gets) { '1' }
-    expect(game_builder).to receive(:puts).with('Invalid opponent key')
+    allow(game_builder).to receive(:gets) { 'h' }
     expect(game_builder.game_opponent).to eq nil
+  end
+
+  it 'test valid board size' do
+    [[3, true], [2, false], ['d', false]].each do |size, resolve|
+      expect(game_builder.valid_size(size)).to eq resolve
+    end
+  end
+
+  it 'test valid opponent key' do
+    [['c', true], ['K', false], ['C', false], ['h', true], ['s', true]].each do |key, resolve|
+      expect(game_builder.valid_opponent_key(key)).to eq resolve
+    end
   end
 end

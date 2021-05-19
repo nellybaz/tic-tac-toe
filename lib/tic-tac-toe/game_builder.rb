@@ -26,6 +26,6 @@ class GameBuilder
   end
 
   def valid_opponent_key(value)
-    %w[c C h].include?(value)
+    %w[c s h].include?(value)
   end
 end
