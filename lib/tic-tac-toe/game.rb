@@ -1,21 +1,27 @@
 require_relative './board'
-require_relative './player'
+require_relative './players/player_factory'
+# require_relative './players/computer_player'
+# require_relative './players/player_factory'
 require_relative './score'
 
 class Game
-  def initialize(player1 = Player.new('X', 1), player2 = Player.new('O', 2), board = Board.new(3))
+  def initialize(
+    player1 = PlayerFactory.make(key: 'h', id: 1, symbol: 'X'),
+    player2 = PlayerFactory.make(key: 'h', id: 2,
+                                 symbol: 'O'),
+    board = Board.new(3)
+  )
     puts 'Welcome to Tic-Tac-Toe'
     @game_is_playing = false
     @player1 = player1
     @player2 = player2
     @current_player = @player1
     @board = board
-    @against_computer = false
     @score = Score.new
     @is_draw = false
   end
 
-  attr_reader :game_is_playing, :current_player, :board, :against_computer, :score
+  attr_reader :game_is_playing, :current_player, :board, :score
 
   def current_symbol
     @current_player.symbol
@@ -33,16 +39,8 @@ class Game
     gets.chomp
   end
 
-  def play_against_computer
-    puts 'Enter Y to play against the computer'
-    decision = user_input
-    @against_computer = (decision == 'Y') || (decision == 'y')
-    @player2 = Player.new('O', 2, is_computer: true) if @against_computer
-    decision
-  end
-
   def choose_player
-    if @against_computer
+    if @player2.instance_of? ComputerPlayer
       puts 'Do you want to play first? Y for yes'
       input = user_input
       decision = (input == 'Y') || (input == 'y')
@@ -51,28 +49,7 @@ class Game
     @current_player.id
   end
 
-  def change_board_size
-    puts 'Enter board size: [Minimum is 3]'
-    is_valid_size = false
-    until is_valid_size
-      input = user_input
-      begin
-        Float(input)
-        if input.to_i >= 3
-          is_valid_size = true
-        else
-          puts 'Invalid input, retry'
-        end
-      rescue StandardError
-        puts 'Invalid input, retry'
-      end
-    end
-    @board = Board.new(input.to_i)
-  end
-
   def start
-    # change_board_size
-    # play_against_computer
     choose_player
     print_scores
     @board.draw
@@ -91,22 +68,22 @@ class Game
   end
 
   def game_score_key
-    @against_computer ? 'computer' : 'human'
+    @player2.is_instance? ComputerPlayer ? 'computer' : 'human'
   end
 
   def game_turn_text
-    if @against_computer && @current_player.is_computer
+    if @player2.is_instance?(ComputerPlayer) && @current_player.is_computer
       "Computer's turn"
     else
-      @against_computer && !@current_player.is_computer ? 'Your turn' : "Player #{@current_player.id}'s turn [e.g 1,4,7,0]"
+      @player2.is_instance?(ComputerPlayer) && !@current_player.is_computer ? 'Your turn' : "Player #{@current_player.id}'s turn [e.g 1,4,7,0]"
     end
   end
 
   def game_winner_text
-    if @against_computer && @current_player.is_computer
+    if @player2.is_instance?(ComputerPlayer) && @current_player.is_computer
       '🤖 Computer 🤖 won'
     else
-      @against_computer && !@current_player.is_computer ? 'You won' : "Player #{@current_player.id} won"
+      @player2.is_instance?(ComputerPlayer) && !@current_player.is_computer ? 'You won' : "Player #{@current_player.id} won"
     end
   end
 
