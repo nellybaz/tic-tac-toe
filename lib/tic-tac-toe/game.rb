@@ -35,14 +35,10 @@ class Game
                       end
   end
 
-  def user_input
-    gets.chomp
-  end
-
-  def choose_player
-    if @player2.instance_of? ComputerPlayer
+  def choose_player_turn
+    unless @player2.instance_of? HumanPlayer
       puts 'Do you want to play first? Y for yes'
-      input = user_input
+      input = gets.chomp
       decision = (input == 'Y') || (input == 'y')
       next_player unless decision
     end
@@ -50,7 +46,7 @@ class Game
   end
 
   def start
-    choose_player
+    choose_player_turn
     print_scores
     @board.draw
     @game_is_playing = true
@@ -68,22 +64,22 @@ class Game
   end
 
   def game_score_key
-    @player2.is_instance? ComputerPlayer ? 'computer' : 'human'
+    !@player2.instance_of?(HumanPlayer) ? 'computer' : 'human'
   end
 
   def game_turn_text
-    if @player2.is_instance?(ComputerPlayer) && @current_player.is_computer
+    if !@player2.instance_of?(HumanPlayer) && !@current_player.instance_of?(HumanPlayer)
       "Computer's turn"
     else
-      @player2.is_instance?(ComputerPlayer) && !@current_player.is_computer ? 'Your turn' : "Player #{@current_player.id}'s turn [e.g 1,4,7,0]"
+      !@player2.instance_of?(HumanPlayer) && !!@current_player.instance_of?(HumanPlayer) ? 'Your turn' : "Player #{@current_player.id}'s turn [e.g 1,4,7,0]"
     end
   end
 
   def game_winner_text
-    if @player2.is_instance?(ComputerPlayer) && @current_player.is_computer
+    if !@player2.instance_of?(HumanPlayer) && !@current_player.instance_of?(HumanPlayer)
       '🤖 Computer 🤖 won'
     else
-      @player2.is_instance?(ComputerPlayer) && !@current_player.is_computer ? 'You won' : "Player #{@current_player.id} won"
+      !@player2.instance_of?(HumanPlayer) && !!@current_player.instance_of?(HumanPlayer) ? 'You won' : "Player #{@current_player.id} won"
     end
   end
 
