@@ -7,7 +7,8 @@ class Game
     player1 = PlayerFactory.make(key: 'h', id: 1, symbol: 'X'),
     player2 = PlayerFactory.make(key: 'h', id: 2,
                                  symbol: 'O'),
-    board = Board.new(3)
+    board = Board.new(3),
+    score = Score.new
   )
     puts 'Welcome to Tic-Tac-Toe'
     @game_is_playing = false
@@ -15,7 +16,7 @@ class Game
     @player2 = player2
     @current_player = @player1
     @board = board
-    @score = Score.new
+    @score = score
     @is_draw = false
   end
 
