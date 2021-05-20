@@ -63,7 +63,11 @@ class Game
   end
 
   def game_score_key
-    !@player2.instance_of?(HumanPlayer) ? 'computer' : 'human'
+    if @player2.instance_of?(ComputerPlayer)
+      'computer'
+    else
+      @player2.instance_of?(SmartComputerPlayer) ? 'smart_computer' : 'human'
+    end
   end
 
   def game_turn_text
