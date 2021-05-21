@@ -52,9 +52,9 @@ class Game
     @game_is_playing = true
     while @game_is_playing
       GameText.player_turn_text(@current_player, @player2)
-      cell = @current_player.move(@board)
+      current_player_move = @current_player.move(@board)
 
-      @board.set_cell(cell, current_symbol)
+      @board.set_cell(current_player_move, current_symbol)
       @board.draw
       check_draw unless check_winner
       next_player if @game_is_playing
