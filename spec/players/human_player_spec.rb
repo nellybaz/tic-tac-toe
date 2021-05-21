@@ -2,7 +2,7 @@ require_relative '../../lib/tic-tac-toe/players/human_player'
 require_relative '../../lib/tic-tac-toe/board'
 
 RSpec.describe HumanPlayer do
-  let(:player) { HumanPlayer.new(1, 'X') }
+  let(:player) { HumanPlayer.random1 }
 
   it 'should make a valid move for human player' do
     expect(player.symbol).to eq 'X'

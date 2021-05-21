@@ -2,7 +2,7 @@ require_relative '../../lib/tic-tac-toe/players/computer_player'
 require_relative '../../lib/tic-tac-toe/board'
 
 RSpec.describe ComputerPlayer do
-  let(:player) { ComputerPlayer.new(1, 'X') }
+  let(:player) { ComputerPlayer.random1 }
   it 'should return 4 as computer move' do
     expect(player).to receive(:puts).with('🤖 Computer played 4 🤖')
     board = Board.new(3)
