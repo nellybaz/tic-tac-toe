@@ -26,11 +26,11 @@ class ComputerPlayer
     'computer'
   end
 
-  def random1
+  def self.random1
     ComputerPlayer.new(1, 'X')
   end
 
-  def random2
+  def self.random2
     ComputerPlayer.new(2, 'O')
   end
 end

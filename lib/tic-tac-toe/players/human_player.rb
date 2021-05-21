@@ -34,11 +34,11 @@ class HumanPlayer
     'human'
   end
 
-  def random1
+  def self.random1
     HumanPlayer.new(1, 'X')
   end
 
-  def random2
+  def self.random2
     HumanPlayer.new(2, 'O')
   end
 end
