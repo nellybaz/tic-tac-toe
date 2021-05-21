@@ -26,8 +26,11 @@ class Score
     []
   end
 
-  # TODO: does two things, hint: refactor
-  def retrieve_statistics
+  def print_game_scores
+    puts retrieve_scores
+  end
+
+  def retrieve_scores
     json_content = JSON.parse @file_data
     output = "=======\nScores\n\n"
     json_content.each_key do |key|
@@ -38,7 +41,6 @@ class Score
       end
     end
     output += "=======\n"
-    puts output
   rescue StandardError => e
     print e
   end

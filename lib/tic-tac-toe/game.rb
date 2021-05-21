@@ -20,7 +20,7 @@ class Game
     @is_draw = false
   end
 
-  attr_reader :game_is_playing, :current_player, :board, :score
+  attr_reader :game_is_playing, :current_player, :board, :scores
 
   def current_symbol
     @current_player.symbol
@@ -98,6 +98,6 @@ class Game
   end
 
   def print_scores
-    @score.retrieve_statistics
+    @score.print_game_scores
   end
 end
