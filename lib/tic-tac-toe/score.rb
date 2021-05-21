@@ -34,9 +34,8 @@ class Score
     output = "=======\nScores\n\n"
     @json_content.each_key do |key|
       output += "\n#{key.upcase}\n\n"
-      game = @json_content[key]
-      game.each_key do |game_key|
-        output += "#{game_key}: #{game[game_key]}\n"
+      @json_content[key].each_key do |game_key|
+        output += "#{game_key}: #{@json_content[key][game_key]}\n"
       end
     end
     output += "=======\n"
