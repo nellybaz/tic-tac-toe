@@ -14,4 +14,8 @@ RSpec.describe HumanPlayer do
   it 'should test if human' do
     expect(player.human?).to eq true
   end
+
+  it 'returns correct player key' do
+    expect(player.key).to eq 'human'
+  end
 end

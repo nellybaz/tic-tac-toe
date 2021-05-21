@@ -21,4 +21,8 @@ class ComputerPlayer
   def human?
     false
   end
+
+  def key
+    'computer'
+  end
 end

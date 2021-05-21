@@ -10,8 +10,11 @@ RSpec.describe ComputerPlayer do
     expect(player.move(board)).to eq 4
   end
 
-
   it 'should test if human' do
     expect(player.human?).to eq false
+  end
+
+  it 'returns correct player key' do
+    expect(player.key).to eq 'computer'
   end
 end

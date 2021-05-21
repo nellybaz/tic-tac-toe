@@ -29,4 +29,8 @@ class HumanPlayer
   def human?
     true
   end
+
+  def key
+    'human'
+  end
 end

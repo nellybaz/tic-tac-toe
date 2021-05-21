@@ -58,4 +58,8 @@ class SmartComputerPlayer
   def human?
     false
   end
+
+  def key
+    'smart_computer'
+  end
 end

@@ -12,4 +12,8 @@ RSpec.describe SmartComputerPlayer do
   it 'should test if human' do
     expect(player.human?).to eq false
   end
+
+  it 'returns correct player key' do
+    expect(player.key).to eq 'smart_computer'
+  end
 end
