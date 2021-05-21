@@ -59,7 +59,7 @@ class Game
       next_player if @game_is_playing
     end
     winner_id = @is_draw ? -1 : @current_player.id - 1
-    @score.record_statistics(@current_player.key, winner_id)
+    @score.record_game_scores(@current_player.key, winner_id)
   end
 
   def game_turn_text

@@ -45,7 +45,7 @@ class Score
     print e
   end
 
-  def record_statistics(key, winner_id)
+  def record_game_scores(key, winner_id)
     new_content = JSON.parse @file_data
     content_keys_and_value = retrieve_content_keys(key)
     new_score = content_keys_and_value[winner_id][1] + 1

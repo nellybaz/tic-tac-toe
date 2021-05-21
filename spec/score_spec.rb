@@ -63,7 +63,7 @@ RSpec.describe Score do
 
     expect(score.file_data).to eq score_content
 
-    expect(score.record_statistics(game_key, winner_index)).to eq 4
+    expect(score.record_game_scores(game_key, winner_index)).to eq 4
   end
 
   it 'should record a draw' do
@@ -94,7 +94,7 @@ RSpec.describe Score do
 
     expect(score.file_data).to eq score_content
 
-    expect(score.record_statistics(game_key, winner_index)).to eq 1
+    expect(score.record_game_scores(game_key, winner_index)).to eq 1
   end
 
   it 'should retrieve content keys correctly' do
