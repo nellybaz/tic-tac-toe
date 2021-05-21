@@ -7,7 +7,6 @@ RSpec.describe Game do
   let(:game) { Game.new }
   before(:each) do
     expect($stdout).to receive(:puts).with('Welcome to Tic-Tac-Toe')
-    # game = Game.new
   end
 
   it 'should switch player' do
@@ -30,7 +29,7 @@ RSpec.describe Game do
                                        symbol: 'O'),
                     Board.new(3))
 
-    expect(game).to receive(:puts).with('Do you want to play first? Y for yes')
+    expect($stdout).to receive(:puts).with('Do you want to play first? Y for yes')
     allow(game).to receive(:gets) { 'n' }
     game.choose_player_turn
     expect(game.current_player).to be_instance_of ComputerPlayer

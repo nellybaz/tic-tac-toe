@@ -37,7 +37,7 @@ class Game
 
   def choose_player_turn
     unless @player2.human?
-      puts 'Do you want to play first? Y for yes'
+      GameText.first_player_decision_text
       input = gets.chomp
       decision = (input == 'Y') || (input == 'y')
       next_player unless decision
@@ -51,7 +51,7 @@ class Game
     @board.draw
     @game_is_playing = true
     while @game_is_playing
-      puts GameText.player_turn_text(@current_player, @player2)
+      GameText.player_turn_text(@current_player, @player2)
       cell = @current_player.move(@board)
 
       @board.set_cell(cell, current_symbol)
@@ -66,7 +66,7 @@ class Game
   def check_winner
     if @board.in_winning_state(current_symbol)
       @game_is_playing = false
-      puts GameText.game_winner_text(@current_player, @player2)
+      GameText.game_winner_text(@current_player, @player2)
       GameText.game_over
       true
     end
