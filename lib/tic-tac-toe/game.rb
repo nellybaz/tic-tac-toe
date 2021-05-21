@@ -59,22 +59,22 @@ class Game
       next_player if @game_is_playing
     end
     winner_id = @is_draw ? -1 : @current_player.id - 1
-    @score.record_statistics(@current_player.key, winner_id) # simplify by passing in the player
+    @score.record_statistics(@current_player.key, winner_id)
   end
 
   def game_turn_text
-    if !@player2.instance_of?(HumanPlayer) && !@current_player.instance_of?(HumanPlayer)
+    if !@current_player.human?
       "Computer's turn"
     else
-      !@player2.instance_of?(HumanPlayer) && !@current_player.instance_of?(HumanPlayer) ? 'Your turn' : "Player #{@current_player.id}'s turn [e.g 1,4,7,0]"
+      !@player2.human? && !@current_player.human? ? 'Your turn' : "Player #{@current_player.id}'s turn [e.g 1,4,7,0]"
     end
   end
 
   def game_winner_text
-    if !@player2.instance_of?(HumanPlayer) && !@current_player.instance_of?(HumanPlayer)
+    if !@current_player.human?
       '🤖 Computer 🤖 won'
     else
-      !@player2.instance_of?(HumanPlayer) && !@current_player.instance_of?(HumanPlayer) ? 'You won' : "Player #{@current_player.id} won"
+      !@player2.human? && !@current_player.human? ? 'You won' : "Player #{@current_player.id} won"
     end
   end
 
