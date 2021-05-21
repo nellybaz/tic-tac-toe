@@ -35,7 +35,7 @@ class Game
   end
 
   def choose_player_turn
-    unless @player2.instance_of? HumanPlayer
+    unless @player2.instance_of? HumanPlayer # call human? method
       puts 'Do you want to play first? Y for yes'
       input = gets.chomp
       decision = (input == 'Y') || (input == 'y')
@@ -59,7 +59,7 @@ class Game
       next_player if @game_is_playing
     end
     winner_id = @is_draw ? -1 : @current_player.id - 1
-    @score.record_statistics(game_score_key, winner_id)
+    @score.record_statistics(game_score_key, winner_id) # simplify by passing in the player
   end
 
   def game_score_key
@@ -74,7 +74,7 @@ class Game
     if !@player2.instance_of?(HumanPlayer) && !@current_player.instance_of?(HumanPlayer)
       "Computer's turn"
     else
-      !@player2.instance_of?(HumanPlayer) && !!@current_player.instance_of?(HumanPlayer) ? 'Your turn' : "Player #{@current_player.id}'s turn [e.g 1,4,7,0]"
+      !@player2.instance_of?(HumanPlayer) && !@current_player.instance_of?(HumanPlayer) ? 'Your turn' : "Player #{@current_player.id}'s turn [e.g 1,4,7,0]"
     end
   end
 
@@ -82,7 +82,7 @@ class Game
     if !@player2.instance_of?(HumanPlayer) && !@current_player.instance_of?(HumanPlayer)
       '🤖 Computer 🤖 won'
     else
-      !@player2.instance_of?(HumanPlayer) && !!@current_player.instance_of?(HumanPlayer) ? 'You won' : "Player #{@current_player.id} won"
+      !@player2.instance_of?(HumanPlayer) && !@current_player.instance_of?(HumanPlayer) ? 'You won' : "Player #{@current_player.id} won"
     end
   end
 

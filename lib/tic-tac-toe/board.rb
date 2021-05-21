@@ -131,8 +131,8 @@ class Board
   end
 
   def minimax_evaluate_board
-    return 10 if diagonal_win('X') || row_win?('X') || col_win?('X')
-    return -10 if diagonal_win('O') || row_win?('O') || col_win?('O')
+    return -10 if diagonal_win('X') || row_win?('X') || col_win?('X')
+    return  10 if diagonal_win('O') || row_win?('O') || col_win?('O')
 
     0
   end
