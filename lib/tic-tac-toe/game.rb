@@ -47,7 +47,7 @@ class Game
 
   def start
     choose_player_turn
-    print_scores
+    GameText.print_scores(@score)
     @board.draw
     @game_is_playing = true
     while @game_is_playing
@@ -62,8 +62,6 @@ class Game
     winner_id = @is_draw ? -1 : @current_player.id - 1
     @score.record_game_scores(@current_player.key, winner_id)
   end
-
-
 
   def check_winner
     if @board.in_winning_state(current_symbol)
@@ -82,9 +80,5 @@ class Game
       puts "It's a draw"
       puts 'Game over 😎'
     end
-  end
-
-  def print_scores
-    @score.print_game_scores
   end
 end

@@ -14,4 +14,8 @@ class GameText
       !player2.human? && current_player.human? ? 'You won' : "Player #{current_player.id} won"
     end
   end
+
+  def self.print_scores(score)
+    score.print_game_scores
+  end
 end
