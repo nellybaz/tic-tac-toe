@@ -11,7 +11,7 @@ class Game
     board = Board.new(3),
     score = Score.new
   )
-    puts 'Welcome to Tic-Tac-Toe'
+    GameText.welcome
     @game_is_playing = false
     @player1 = player1
     @player2 = player2
@@ -67,7 +67,7 @@ class Game
     if @board.in_winning_state(current_symbol)
       @game_is_playing = false
       puts GameText.game_winner_text(@current_player, @player2)
-      puts 'Game over 😎'
+      GameText.game_over
       true
     end
     false
@@ -77,8 +77,8 @@ class Game
     if @game_is_playing && @board.in_draw_state
       @game_is_playing = false
       @is_draw = true
-      puts "It's a draw"
-      puts 'Game over 😎'
+      GameText.draw
+      GameText.game_over
     end
   end
 end

@@ -18,4 +18,16 @@ class GameText
   def self.print_scores(score)
     score.print_game_scores
   end
+
+  def self.game_over
+    puts 'Game over 😎'
+  end
+
+  def self.draw
+    puts "It's a draw"
+  end
+
+  def self.welcome
+    puts 'Welcome to Tic-Tac-Toe'
+  end
 end

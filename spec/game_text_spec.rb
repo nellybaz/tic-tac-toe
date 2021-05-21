@@ -24,4 +24,19 @@ RSpec.describe GameText do
     expect(GameText.game_winner_text(player1, HumanPlayer.new(2, 'O'))).to eq 'Player 1 won'
     expect(GameText.game_winner_text(HumanPlayer.new(2, 'O'), player1)).to eq 'Player 2 won'
   end
+
+  it 'prints correct game over text' do
+    expect(GameText).to receive(:puts).with('Game over 😎')
+    GameText.game_over
+  end
+
+  it 'prints correct draw text' do
+    expect(GameText).to receive(:puts).with("It's a draw")
+    GameText.draw
+  end
+
+  it 'prints correct welcome text' do
+    expect(GameText).to receive(:puts).with('Welcome to Tic-Tac-Toe')
+    GameText.welcome
+  end
 end
