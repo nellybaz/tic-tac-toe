@@ -59,15 +59,7 @@ class Game
       next_player if @game_is_playing
     end
     winner_id = @is_draw ? -1 : @current_player.id - 1
-    @score.record_statistics(game_score_key, winner_id) # simplify by passing in the player
-  end
-
-  def game_score_key
-    if @player2.instance_of?(ComputerPlayer)
-      'computer'
-    else
-      @player2.instance_of?(SmartComputerPlayer) ? 'smart_computer' : 'human'
-    end
+    @score.record_statistics(@current_player.key, winner_id) # simplify by passing in the player
   end
 
   def game_turn_text
