@@ -1,6 +1,7 @@
 require_relative './board'
 require_relative './players/player_factory'
 require_relative './score'
+require_relative './game_text'
 
 class Game
   def initialize(
@@ -50,7 +51,7 @@ class Game
     @board.draw
     @game_is_playing = true
     while @game_is_playing
-      puts game_turn_text
+      puts GameText.player_turn_text(@current_player, @player2)
       cell = @current_player.move(@board)
 
       @board.set_cell(cell, current_symbol)
@@ -62,26 +63,12 @@ class Game
     @score.record_game_scores(@current_player.key, winner_id)
   end
 
-  def game_turn_text
-    if !@current_player.human?
-      "Computer's turn"
-    else
-      !@player2.human? && !@current_player.human? ? 'Your turn' : "Player #{@current_player.id}'s turn [e.g 1,4,7,0]"
-    end
-  end
 
-  def game_winner_text
-    if !@current_player.human?
-      '🤖 Computer 🤖 won'
-    else
-      !@player2.human? && !@current_player.human? ? 'You won' : "Player #{@current_player.id} won"
-    end
-  end
 
   def check_winner
     if @board.in_winning_state(current_symbol)
       @game_is_playing = false
-      puts game_winner_text
+      puts GameText.game_winner_text(@current_player, @player2)
       puts 'Game over 😎'
       true
     end
