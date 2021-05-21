@@ -54,4 +54,8 @@ class SmartComputerPlayer
     end
     best
   end
+
+  def human?
+    false
+  end
 end

@@ -17,4 +17,8 @@ class ComputerPlayer
     puts "🤖 Computer played #{move} 🤖"
     move
   end
+
+  def human?
+    false
+  end
 end

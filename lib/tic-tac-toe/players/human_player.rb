@@ -25,4 +25,8 @@ class HumanPlayer
     end
     user_move.to_i
   end
+
+  def human?
+    true
+  end
 end

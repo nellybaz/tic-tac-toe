@@ -27,7 +27,7 @@ class Game
   end
 
   def next_player
-    @current_player = if @current_player.id == 1
+    @current_player = if @current_player.id == @player1.id
                         @player2
                       else
                         @player1
@@ -35,7 +35,7 @@ class Game
   end
 
   def choose_player_turn
-    unless @player2.instance_of? HumanPlayer # call human? method
+    unless @player2.human?
       puts 'Do you want to play first? Y for yes'
       input = gets.chomp
       decision = (input == 'Y') || (input == 'y')
