@@ -62,4 +62,12 @@ class SmartComputerPlayer
   def key
     'smart_computer'
   end
+
+  def random1
+    SmartComputerPlayer.new(1, 'X')
+  end
+
+  def random2
+    SmartComputerPlayer.new(2, 'O')
+  end
 end

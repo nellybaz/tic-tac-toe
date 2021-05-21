@@ -33,4 +33,12 @@ class HumanPlayer
   def key
     'human'
   end
+
+  def random1
+    HumanPlayer.new(1, 'X')
+  end
+
+  def random2
+    HumanPlayer.new(2, 'O')
+  end
 end
