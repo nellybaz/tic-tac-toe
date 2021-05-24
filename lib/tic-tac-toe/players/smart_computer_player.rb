@@ -1,4 +1,5 @@
 require_relative '../algorithms/minimax'
+require_relative '../move_validator'
 
 class SmartComputerPlayer
   def initialize(id, symbol)
@@ -15,7 +16,7 @@ class SmartComputerPlayer
     (0..board.size - 1).each do |i|
       (0..board.size - 1).each do |j|
         index = i * board.size + j
-        next unless board.valid_move?(board.state[index])
+        next unless MoveValidator.valid_move?(board, board.state[index])
 
         board.set_cell(index, @symbol)
         move_val = Minimax.run(board, 0, false)
@@ -30,6 +31,7 @@ class SmartComputerPlayer
     puts "🤖 Computer played #{best_move} 🤖"
     best_move
   end
+
 
   def human?
     false

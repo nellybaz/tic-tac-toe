@@ -1,3 +1,5 @@
+require_relative '../move_validator'
+
 class HumanPlayer
   def initialize(id, symbol)
     @id = id
@@ -11,7 +13,7 @@ class HumanPlayer
     is_not_valid_cell = true
     while is_not_valid_move || is_not_valid_cell
       user_move = gets.chomp
-      if board.valid_move?(user_move)
+      if MoveValidator.valid_move?(board, user_move)
         is_not_valid_move = false
         current_cell = board.get_cell(user_move.to_i)
         if %w[X O].include?(current_cell)

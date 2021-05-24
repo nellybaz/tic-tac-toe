@@ -7,7 +7,7 @@ class GameRules
     col = column_win?(board, symbol)
     return col if col
 
-    diagonal_win(board, symbol)
+    diagonal_win?(board, symbol)
   end
 
   def self.draw(board)

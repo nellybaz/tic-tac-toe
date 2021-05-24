@@ -1,4 +1,5 @@
 require_relative '../game_rules'
+require_relative '../move_validator'
 
 class Minimax
   def self.evaluate_board(board)
@@ -21,9 +22,9 @@ class Minimax
     (0..board.size - 1).each do |i|
       (0..board.size - 1).each do |j|
         index = i * board.size + j
-        next unless board.valid_move?(board.state[index])
+        next unless MoveValidator.valid_move?(board, board.state[index])
 
-        symbol = is_max ? 'O': 'X'
+        symbol = is_max ? 'O' : 'X'
         board.set_cell(index, symbol)
 
         move_options = [best, run(board, depth + 1, !is_max)]

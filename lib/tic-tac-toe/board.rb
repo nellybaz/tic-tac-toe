@@ -1,3 +1,6 @@
+require_relative './move_validator'
+
+
 class Board
   def initialize(size)
     @size = size
@@ -26,16 +29,9 @@ class Board
     (0..@size - 1).each do |i|
       (0..@size - 1).each do |j|
         index = i * @size + j
-        return true if valid_move?(@state[index])
+        return true if MoveValidator.valid_move?(self, @state[index])
       end
     end
-    false
-  end
-
-  def valid_move?(val)
-    Float(val)
-    true
-  rescue StandardError
     false
   end
 

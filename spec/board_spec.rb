@@ -19,7 +19,7 @@ RSpec.describe Board do
     expect(board.get_row(0)).to eq "| X#{space}X#{space}X#{space}|"
   end
 
-  it 'should set cell' do
+  xit 'should set cell' do
     expect(board.get_cell(0)).to eq '0'
     board.set_cell(0, 'X')
     expect(board.get_cell(0)).to eq 'X'
@@ -31,10 +31,6 @@ RSpec.describe Board do
 
     board.state = %w[O O X X X O O X X]
     expect(board.moves_left?).to eq false
-  end
-
-  it 'checks valid move' do
-    expect(board.valid_move?('3')).to eq true
   end
 
   it 'test valid board size' do
