@@ -6,7 +6,7 @@ class BoardDrawer
     end
     puts horizontal_border board
   end
-  
+
   def self.horizontal_border(board)
     boarder_length = get_row(board, 0).length - 2
     "  #{'-' * boarder_length}"

@@ -1,5 +1,4 @@
 class GameRules
-
   def self.win?(board, symbol)
     row = row_win?(board, symbol)
     return row if row
@@ -10,7 +9,7 @@ class GameRules
     diagonal_win?(board, symbol)
   end
 
-  def self.draw(board)
+  def self.draw?(board)
     count = 0
     board.state.each do |item|
       count += 1 if %w[X O].include?(item)
@@ -19,7 +18,6 @@ class GameRules
   end
 
   def self.column_win?(board, symbol)
-    winning_state = true
     (0..board.size - 1).each do |index|
       winning_state = true
       (index..board.state.length - 1).step(board.size) do |col_index|
@@ -34,7 +32,6 @@ class GameRules
   end
 
   def self.row_win?(board, symbol)
-    winning_state = true
     (0..board.size - 1).each do |index|
       limit = board.size * index
       winning_state = true

@@ -27,10 +27,6 @@ class Score
   end
 
   def print_game_scores
-    puts retrieve_scores
-  end
-
-  def retrieve_scores
     output = "=======\nScores\n\n"
     @json_content.each_key do |key|
       output += "\n#{key.upcase}\n\n"
@@ -38,7 +34,7 @@ class Score
         output += "#{game_key}: #{@json_content[key][game_key]}\n"
       end
     end
-    output += "=======\n"
+    puts output += "=======\n"
   rescue StandardError => e
     print e
   end

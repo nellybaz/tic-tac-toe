@@ -76,7 +76,7 @@ class Game
   end
 
   def check_draw
-    if @game_is_playing && GameRules.draw(@board)
+    if @game_is_playing && GameRules.draw?(@board)
       @game_is_playing = false
       @is_draw = true
       GameText.draw

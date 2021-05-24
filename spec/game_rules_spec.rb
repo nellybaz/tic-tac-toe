@@ -62,13 +62,13 @@ RSpec.describe GameRules do
     it 'should return true for draw state' do
       new_state = %w[O O X X X O O X X]
       board.state = new_state
-      expect(GameRules.draw(board)).to eq true
+      expect(GameRules.draw?(board)).to eq true
     end
 
     it 'should return false for non-draw state' do
       new_state = ['X', '.', '.', '.', 'X', '.', '.', '.', 'X']
       board.state = new_state
-      expect(GameRules.draw(board)).to eq false
+      expect(GameRules.draw?(board)).to eq false
     end
   end
 end
