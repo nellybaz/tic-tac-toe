@@ -2,6 +2,8 @@ require_relative './board'
 require_relative './players/player_factory'
 require_relative './score'
 require_relative './game_text'
+require_relative './board_drawer'
+require_relative './game_rules'
 
 class Game
   def initialize(
@@ -48,14 +50,14 @@ class Game
   def start
     choose_player_turn
     GameText.print_scores(@score)
-    @board.draw
+    BoardDrawer.draw(@board)
     @game_is_playing = true
     while @game_is_playing
       GameText.player_turn_text(@current_player, @player2)
       current_player_move = @current_player.move(@board)
 
       @board.set_cell(current_player_move, current_symbol)
-      @board.draw
+      BoardDrawer.draw(@board)
       check_draw unless check_winner
       next_player if @game_is_playing
     end
@@ -64,7 +66,7 @@ class Game
   end
 
   def check_winner
-    if @board.in_winning_state(current_symbol)
+    if GameRules.win?(@board, current_symbol)
       @game_is_playing = false
       GameText.game_winner_text(@current_player, @player2)
       GameText.game_over
@@ -74,7 +76,7 @@ class Game
   end
 
   def check_draw
-    if @game_is_playing && @board.in_draw_state
+    if @game_is_playing && GameRules.draw(@board)
       @game_is_playing = false
       @is_draw = true
       GameText.draw
