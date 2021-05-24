@@ -15,8 +15,7 @@ class HumanPlayer
       user_move = gets.chomp
       if MoveValidator.valid_move?(board, user_move)
         is_not_valid_move = false
-        current_cell = board.get_cell(user_move.to_i)
-        if %w[X O].include?(current_cell)
+        if !board.unselected_cells.include?(user_move)
           puts 'Cell not empty, retry'
         else
           is_not_valid_cell = false

@@ -6,7 +6,7 @@ class GameBuilder
   def board_size
     puts 'Enter the size of the game'
     input = gets.chomp
-    puts 'Invalid board size' unless Board.valid_baord_size? input
+    puts 'Invalid board size' unless Board.valid_board_size? input
     input.to_i
   end
 

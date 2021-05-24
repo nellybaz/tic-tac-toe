@@ -1,6 +1,5 @@
 require_relative './move_validator'
 
-
 class Board
   def initialize(size)
     @size = size
@@ -21,8 +20,8 @@ class Board
     @state[cell] = symbol
   end
 
-  def get_cell(cell)
-    @state[cell]
+  def unselected_cells
+    @state.reject { |cell| %w[X O].include?(cell) }
   end
 
   def moves_left?
@@ -35,7 +34,7 @@ class Board
     false
   end
 
-  def self.valid_baord_size?(value)
+  def self.valid_board_size?(value)
     Float(value) && value.to_i > 2
   rescue StandardError
     false

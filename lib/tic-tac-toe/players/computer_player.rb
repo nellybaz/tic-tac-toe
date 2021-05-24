@@ -7,13 +7,7 @@ class ComputerPlayer
   attr_reader :id, :symbol
 
   def move(board)
-    board_length = board.size * board.size
-    move = rand(board_length)
-    current_cell = board.get_cell(move)
-    while %w[X O].include?(current_cell)
-      move = rand(board_length)
-      current_cell = board.get_cell(move)
-    end
+    move = board.unselected_cells.sample.to_i
     puts "🤖 Computer played #{move} 🤖"
     move
   end
