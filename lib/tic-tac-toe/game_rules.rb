@@ -9,6 +9,7 @@ class GameRules
     diagonal_win?(board, symbol)
   end
 
+  # merge two methods and return and object/string
   def self.draw?(board)
     count = 0
     board.state.each do |item|

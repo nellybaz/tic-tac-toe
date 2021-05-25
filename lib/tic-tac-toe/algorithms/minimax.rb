@@ -19,19 +19,17 @@ class Minimax
 
     best = is_max ? -Float::INFINITY : Float::INFINITY
 
-    (0..board.size - 1).each do |i|
-      (0..board.size - 1).each do |j|
-        index = i * board.size + j
-        next unless MoveValidator.valid_move?(board, board.state[index])
+    board.unselected_cells.each do |index|
+      index = index.to_i
+      next unless MoveValidator.valid_move?(board, board.state[index])
 
-        symbol = is_max ? 'O' : 'X'
-        board.set_cell(index, symbol)
+      symbol = is_max ? 'O' : 'X'
+      board.set_cell(index, symbol)
 
-        move_options = [best, run(board, depth + 1, !is_max)]
-        best = is_max ? move_options.max : move_options.min
+      move_options = [best, run(board, depth + 1, !is_max)]
+      best = is_max ? move_options.max : move_options.min
 
-        board.set_cell(index, index.to_s)
-      end
+      board.set_cell(index, index.to_s)
     end
     best
   end
