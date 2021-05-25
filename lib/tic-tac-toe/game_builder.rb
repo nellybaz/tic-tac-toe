@@ -5,15 +5,23 @@ require_relative './board'
 class GameBuilder
   def board_size
     puts 'Enter the size of the game'
-    input = gets.chomp
-    puts 'Invalid board size' unless Board.valid_board_size? input
+    invalid_input = true
+    while invalid_input
+      input = gets.chomp
+      invalid_input = !Board.valid_board_size?(input)
+      puts 'Invalid board size' if invalid_input
+    end
     input.to_i
   end
 
   def game_opponent
     puts 'Choose opponent. [c for computer, s for smart computer, h for human]'
-    input = gets.chomp
-    puts 'Invalid opponent key' unless PlayerFactory.valid_player_key? input
+    invalid_input = true
+    while invalid_input
+      input = gets.chomp
+      invalid_input = !PlayerFactory.valid_player_key?(input)
+      puts 'Invalid opponent key' if invalid_input
+    end
     PlayerFactory.make(key: input, id: 2, symbol: 'O')
   end
 
