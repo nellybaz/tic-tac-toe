@@ -11,12 +11,14 @@ RSpec.describe GameBuilder do
   it 'builds board size from input' do
     expect(game_builder).to receive(:puts).with('Enter the size of the game')
     allow(game_builder).to receive(:gets) { '5' }
+    allow(game_builder).to receive(:loop).and_yield
     expect(game_builder.board_size).to eq 5
   end
 
   it 'returns an error on board size less than 3' do
     expect(game_builder).to receive(:puts).with('Enter the size of the game')
     allow(game_builder).to receive(:gets) { '2' }
+    allow(game_builder).to receive(:loop).and_yield
     expect(game_builder).to receive(:puts).with('Invalid board size')
     game_builder.board_size
   end
@@ -24,6 +26,7 @@ RSpec.describe GameBuilder do
   it 'returns an error on wrong board size' do
     expect(game_builder).to receive(:puts).with('Enter the size of the game')
     allow(game_builder).to receive(:gets) { '1' }
+    allow(game_builder).to receive(:loop).and_yield
     expect(game_builder).to receive(:puts).with('Invalid board size')
     game_builder.board_size
   end
@@ -31,6 +34,7 @@ RSpec.describe GameBuilder do
   it 'returns error on invalid game opponent key' do
     expect(game_builder).to receive(:puts).with(game_opponent_text)
     allow(game_builder).to receive(:gets) { 'k' }
+    allow(game_builder).to receive(:loop).and_yield
     expect(game_builder).to receive(:puts).with('Invalid opponent key')
     game_builder.game_opponent
   end
@@ -38,6 +42,7 @@ RSpec.describe GameBuilder do
   it 'opponent should be human player when h is choosen' do
     expect(game_builder).to receive(:puts).with(game_opponent_text)
     allow(game_builder).to receive(:gets) { 'h' }
+    allow(game_builder).to receive(:loop).and_yield
     expect(game_builder.game_opponent).to be_instance_of HumanPlayer
   end
 end

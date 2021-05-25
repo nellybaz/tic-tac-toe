@@ -6,7 +6,10 @@ class GameBuilder
   def board_size
     puts 'Enter the size of the game'
     invalid_input = true
-    while invalid_input
+    input = ''
+    loop do
+      break unless invalid_input
+
       input = gets.chomp
       invalid_input = !Board.valid_board_size?(input)
       puts 'Invalid board size' if invalid_input
@@ -17,7 +20,10 @@ class GameBuilder
   def game_opponent
     puts 'Choose opponent. [c for computer, s for smart computer, h for human]'
     invalid_input = true
-    while invalid_input
+    input = ''
+    loop do
+      break unless invalid_input
+
       input = gets.chomp
       invalid_input = !PlayerFactory.valid_player_key?(input)
       puts 'Invalid opponent key' if invalid_input
