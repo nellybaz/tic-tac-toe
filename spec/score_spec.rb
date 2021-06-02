@@ -26,13 +26,10 @@ RSpec.describe Score do
         }
       }'
   end
-#   before(:each) do
-#     allow(file).to receive(:read).with(file_name).and_return(score_content)
-#   end
 
   it 'should print game scores correctly' do
     expect(score).to receive(:puts).with("=======\nScores\n\n\nHUMAN\n\nplayer1: 3\nplayer2: 2\ndraw: 0\n\nCOMPUTER\n\nhuman: 0\ncomputer: 0\ndraw: 0\n\nSMART_COMPUTER\n\nhuman: 1\ncomputer: 1\ndraw: 0\n=======\n")
-    score.retrieve_statistics
+    score.print_game_scores
   end
 
   it 'should record player 1 as winner' do
@@ -63,7 +60,7 @@ RSpec.describe Score do
 
     expect(score.file_data).to eq score_content
 
-    expect(score.record_statistics(game_key, winner_index)).to eq 4
+    expect(score.record_game_scores(game_key, winner_index)).to eq 4
   end
 
   it 'should record a draw' do
@@ -94,7 +91,7 @@ RSpec.describe Score do
 
     expect(score.file_data).to eq score_content
 
-    expect(score.record_statistics(game_key, winner_index)).to eq 1
+    expect(score.record_game_scores(game_key, winner_index)).to eq 1
   end
 
   it 'should retrieve content keys correctly' do
