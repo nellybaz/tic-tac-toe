@@ -2,9 +2,6 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
-const do = ()=>{
-
-}
   return (
     <div className="App">
       <header className="App-header">
@@ -21,7 +18,7 @@ const do = ()=>{
           Learn React
         </a>
       </header>
-    </div>
+    </div> 
   );
 }
 
