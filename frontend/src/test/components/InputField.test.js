@@ -41,17 +41,17 @@ describe("InputField", () => {
       input.dispatchEvent(new KeyboardEvent("keyup", { bubbles: true, key: 'a', }))
       input.dispatchEvent(new KeyboardEvent("keyup", { bubbles: true, key: 'Enter', }))
     })
-    
+
     expect(onKeyUp).toHaveBeenCalled()
   })
- 
+
   it("renders error text", async () => {
     const label = 'Enter board size'
     const onKeyUp = jest.fn()
 
 
     await act(async () => {
-      render(<InputField label={label} onKeyUp={onKeyUp} showError={true}/>, container)
+      render(<InputField label={label} onKeyUp={onKeyUp} showError={true} />, container)
     })
 
     const input = container.querySelector("[data-testid='input']")
@@ -62,12 +62,12 @@ describe("InputField", () => {
       input.dispatchEvent(new KeyboardEvent("keyup", { bubbles: true, key: 'a', }))
       input.dispatchEvent(new KeyboardEvent("keyup", { bubbles: true, key: 'Enter', }))
     })
-    
+
     expect(onKeyUp).toHaveBeenCalled()
 
     const errorText = document.querySelector("[data-testid='input-error']")
     expect(errorText.textContent).toEqual('Response is required')
-   
+
   })
 
 })
