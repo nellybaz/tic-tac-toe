@@ -3,7 +3,9 @@ import './App.css';
 import InputField from './components/InputField/InputField';
 
 function App() {
-  const onEnter = () => { alert('hi') }
+  const onEnter = (event) => { 
+    
+  }
   return (
     <div className="App">
       <header className="App-header">
