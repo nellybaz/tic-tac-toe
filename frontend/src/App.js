@@ -1,24 +1,19 @@
 import logo from './logo.svg';
 import './App.css';
+import InputField from './components/InputField/InputField';
 
 function App() {
+  const onEnter = () => { alert('hi') }
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h3>Welcome to tic-tac-toe game</h3>
+
+        <br />
+        <InputField label='Enter the size of the board' onEnter={onEnter} />
       </header>
-    </div> 
+    </div>
   );
 }
 
