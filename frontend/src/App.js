@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import InputField from './components/InputField';
+import InputField from './components/InputField/index';
+import Cell from './components/Cell';
 import { useState } from 'react';
 import AppAction from './actions/App.action';
 
@@ -25,13 +26,13 @@ function App() {
       default:
         break;
     }
-  }
+  } 
 
   const stageDisplay = {
     0: <InputField label='Enter the size of the board' onChange={inputHandler} onKeyUp={gotoNextStage} showError={showError} />,
     1: <InputField label='Choose opponent. [c for computer, s for smart computer, h for human]' onChange={inputHandler} onKeyUp={gotoNextStage} showError={showError} />,
     2: <InputField label='Do you want to play first? Y for yes' onChange={inputHandler} onKeyUp={gotoNextStage} showError={showError} />,
-    3: (<div><h2>Game board here</h2></div>)
+    3: (<div><Cell value={0}/></div>)
   }
 
   return (

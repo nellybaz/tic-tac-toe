@@ -22,4 +22,22 @@ describe("Cell", () => {
     })
     expect(container.querySelector("[data-testid='cell']").textContent).toEqual(value)
   })
+
+  it("shoud call the function on user click event", async () => {
+    const value = '0';
+    const clickHandler = jest.fn()
+
+    await act(async () => {
+      render(<Cell value={value} clickHandler={clickHandler}/>, container)
+    })
+
+    const cell = container.querySelector("[data-testid='cell']")
+    expect(cell.textContent).toEqual(value)
+
+    act(() => {
+      cell.dispatchEvent(new MouseEvent("click", { bubbles: true }))
+    })
+
+    expect(clickHandler).toHaveBeenCalledTimes(1)
+  })
 })
