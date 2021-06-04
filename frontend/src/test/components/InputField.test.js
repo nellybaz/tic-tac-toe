@@ -1,6 +1,6 @@
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
-import InputField from '../../components/InputField/InputField';
+import InputField from '../../components/InputField';
 
 let container = null
 beforeEach(() => {
