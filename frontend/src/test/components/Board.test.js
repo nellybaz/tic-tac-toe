@@ -1,6 +1,6 @@
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
-import Cell from '../../components/Cell';
+import Board from '../../components/Board';
 
 let container = null
 beforeEach(() => {
@@ -14,24 +14,25 @@ afterEach(() => {
   container = null;
 })
 
-describe("Cell", () => {
+describe("Board", () => {
   it("shoud render with the right value", async () => {
     const value = '0'
     await act(async () => {
-      render(<Cell value={value} />, container)
+      render(<Board value={value} />, container)
     })
-    expect(container.querySelector(`[data-testid='cell-${value}']`).textContent).toEqual(value)
+    for (let index = 0; index < 9; index++)
+      expect(container.querySelector(`[data-testid='cell-${index}']`).textContent).toEqual(index.toString())
   })
 
-  it("shoud call the function on user click event", async () => {
+  xit("shoud call the function on user click event", async () => {
     const value = '0';
     const clickHandler = jest.fn()
 
     await act(async () => {
-      render(<Cell value={value} clickHandler={clickHandler}/>, container)
+      render(<Board value={value} clickHandler={clickHandler} />, container)
     })
 
-    const cell = container.querySelector(`[data-testid='cell-${value}']`)
+    const cell = container.querySelector("[data-testid='board']")
     expect(cell.textContent).toEqual(value)
 
     act(() => {
