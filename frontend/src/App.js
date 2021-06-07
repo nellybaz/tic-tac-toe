@@ -14,7 +14,7 @@ function App() {
   const buttonClickHandler = _ => {
     if (state.boardSize === 0) setShowError(true)
     else setStage(stage + 1)
-    if(stage === 2) console.log(state);
+    if (stage === 2) console.log(state);
   }
 
   const inputHandler = (event) => {
@@ -88,6 +88,9 @@ function App() {
         {
           stageDisplay[stage]
         }
+        {
+      showError && <small data-testid='input-error'>Response is required</small>
+    }
       </header>
     </div>
   );
