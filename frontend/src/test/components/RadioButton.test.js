@@ -33,12 +33,12 @@ describe("RadioButton", () => {
     })
 
     const radioButton = container.querySelector(`[data-testid='radio-button']`)
-    expect(container.querySelector(`[data-testid='options-1']`).value).toEqual(options[0]['id'].toString())
-    expect(container.querySelector(`[data-testid='options-2']`).value).toEqual(options[1]['id'].toString())
+    expect(container.querySelector(`[data-testid='options-1']`).value).toEqual(options[0]['value'].toString())
+    expect(container.querySelector(`[data-testid='options-2']`).value).toEqual(options[1]['value'].toString())
 
   })
 
-  xit("shoud call function on change", async () => {
+  it("shoud call function on change", async () => {
     const options = [
       {
         id: 1,
@@ -58,7 +58,7 @@ describe("RadioButton", () => {
       render(<RadioButton options={options} onChange={onChange}/>, container)
     })
 
-    const radioButton = container.querySelector(`[data-testid='radio-button']`)
+    const radioButton = container.querySelector(`[data-testid='options-1']`)
     act(() => {
       radioButton.dispatchEvent(new MouseEvent('click', { bubbles: true }))
     })
