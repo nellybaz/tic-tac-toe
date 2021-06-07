@@ -3,7 +3,6 @@ import './App.css';
 import InputField from './components/InputField/index';
 import Board from './components/Board';
 import { useState } from 'react';
-import AppAction from './actions/App.action';
 import Button from "./components/Button"
 import RadioButton from './components/RadioButton'
 
@@ -12,10 +11,10 @@ function App() {
   const [stage, setStage] = useState(0)
   const [state, setState] = useState({ boardSize: 0, opponent: 'c', playFirst: true })
 
-  const buttonClickHandler = (event) => {
-    if (state.boardSize == 0) setShowError(true)
+  const buttonClickHandler = _ => {
+    if (state.boardSize === 0) setShowError(true)
     else setStage(stage + 1)
-    if(stage == 2) console.log(state);
+    if(stage === 2) console.log(state);
   }
 
   const inputHandler = (event) => {
@@ -30,7 +29,7 @@ function App() {
         break;
 
       case 2:
-        setState({ ...state, playFirst: userInput == 'y' })
+        setState({ ...state, playFirst: userInput === 'y' })
         break;
 
       default:
