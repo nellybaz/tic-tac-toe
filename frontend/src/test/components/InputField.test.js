@@ -17,57 +17,47 @@ afterEach(() => {
 describe("InputField", () => {
   it("shoud render input field with the right label", async () => {
     const label = 'Enter board size'
+    const placeholder = 'Enter'
     await act(async () => {
-      render(<InputField label={label} />, container)
+      render(<InputField label={label}  placeholder={placeholder}/>, container)
     })
+
     expect(container.querySelector("[data-testid='input-label']").textContent).toEqual(label)
-    expect(container.querySelector("[data-testid='input']").placeholder).toEqual('Hit enter after response')
+    expect(container.querySelector("[data-testid='input']").placeholder).toEqual(placeholder)
   })
 
-  it("calls function on enter key", async () => {
+  xit("calls function on change", async () => {
     const label = 'Enter board size'
-    const onKeyUp = jest.fn()
-
+    const onChange = jest.fn()
+    const placeholder = 'Enter'
 
     await act(async () => {
-      render(<InputField label={label} onKeyUp={onKeyUp} />, container)
+      render(<InputField label={label} onChange={onChange} placeholder={placeholder} />, container)
     })
 
     const input = container.querySelector("[data-testid='input']")
     expect(container.querySelector("[data-testid='input-label']").textContent).toEqual(label)
-    expect(input.placeholder).toEqual('Hit enter after response')
+    expect(input.placeholder).toEqual(placeholder)
 
     act(() => {
-      input.dispatchEvent(new KeyboardEvent("keyup", { bubbles: true, key: 'a', }))
-      input.dispatchEvent(new KeyboardEvent("keyup", { bubbles: true, key: 'Enter', }))
+      input.dispatchEvent(new InputEvent("change", { bubbles: true }))
     })
 
-    expect(onKeyUp).toHaveBeenCalled()
-  })
+    expect(onChange).toHaveBeenCalledTimes(1)
+  }) 
 
-  it("renders error text", async () => {
+  it("displays error text according to props", async () => {
     const label = 'Enter board size'
-    const onKeyUp = jest.fn()
-
-
+    const placeholder = 'Enter'
     await act(async () => {
-      render(<InputField label={label} onKeyUp={onKeyUp} showError={true} />, container)
+      render(<InputField label={label} showError={true} placeholder={placeholder}/>, container)
     })
 
     const input = container.querySelector("[data-testid='input']")
     expect(container.querySelector("[data-testid='input-label']").textContent).toEqual(label)
-    expect(input.placeholder).toEqual('Hit enter after response')
+    expect(input.placeholder).toEqual(placeholder)
+    expect(container.querySelector("[data-testid='input-error']").textContent).toEqual('Response is required')
 
-    act(() => {
-      input.dispatchEvent(new KeyboardEvent("keyup", { bubbles: true, key: 'a', }))
-      input.dispatchEvent(new KeyboardEvent("keyup", { bubbles: true, key: 'Enter', }))
-    })
-
-    expect(onKeyUp).toHaveBeenCalled()
-
-    const errorText = document.querySelector("[data-testid='input-error']")
-    expect(errorText.textContent).toEqual('Response is required')
-
-  })
+  }) 
 
 })
