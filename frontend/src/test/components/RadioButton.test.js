@@ -35,6 +35,7 @@ describe("RadioButton", () => {
     const radioButton = container.querySelector(`[data-testid='radio-button']`)
     expect(container.querySelector(`[data-testid='options-1']`).value).toEqual(options[0]['value'].toString())
     expect(container.querySelector(`[data-testid='options-2']`).value).toEqual(options[1]['value'].toString())
+    expect(container.querySelector(`[data-testid='options-2-label']`).textContent).toEqual(options[1]['label'].toString())
 
   })
 

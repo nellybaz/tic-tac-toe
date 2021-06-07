@@ -18,7 +18,7 @@ describe("Button", () => {
   it("shoud render with the right props", async () => {
     const text = 'Click me'
     await act(async () => {
-      render(<Button text={text} />, container)
+      render(<Button label={text} />, container)
     })
     expect(container.querySelector(`[data-testid='button']`).textContent).toEqual(text)
   })
@@ -28,7 +28,7 @@ describe("Button", () => {
     const onClick = jest.fn()
 
     await act(async () => {
-      render(<Button text={text} onClick={onClick}/>, container)
+      render(<Button label={text} onClick={onClick}/>, container)
     })
 
     const button = container.querySelector(`[data-testid='button']`)
