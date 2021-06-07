@@ -15,6 +15,7 @@ function App() {
   const buttonClickHandler = (event) => {
     if (state.boardSize == 0) setShowError(true)
     else setStage(stage + 1)
+    if(stage == 2) console.log(state);
   }
 
   const inputHandler = (event) => {
@@ -22,6 +23,14 @@ function App() {
     switch (stage) {
       case 0:
         setState({ ...state, boardSize: parseInt(userInput) })
+        break;
+
+      case 1:
+        setState({ ...state, opponent: userInput })
+        break;
+
+      case 2:
+        setState({ ...state, playFirst: userInput == 'y' })
         break;
 
       default:
@@ -48,26 +57,26 @@ function App() {
   ]
   const playFirstOptions = [
     {
-      id: 1,
+      id: 11,
       value: 'y',
       label: 'Yes'
     },
     {
-      id: 2,
+      id: 21,
       value: 'n',
       label: 'No'
     },
   ]
 
   const stageOne = (<div> <InputField label='Enter the size of the board' type='number' onChange={inputHandler} onKeyUp={buttonClickHandler} showError={showError} /> <Button label='Next' onClick={buttonClickHandler} /></div>)
-  const stageTwo = (<div> <h4>Choose player</h4> <RadioButton options={stageTwoOptions} /> <Button label='Next' onClick={buttonClickHandler} /></div>)
-  const stageThree = (<div> <h4>Do you wanna play first?</h4> <RadioButton options={playFirstOptions} /> <Button label='Next' onClick={buttonClickHandler} /></div>)
+  const stageTwo = (<div> <h4>Choose player</h4> <RadioButton options={stageTwoOptions} onChange={inputHandler} /> <Button label='Next' onClick={buttonClickHandler} /></div>)
+  const stageThree = (<div> <h4>Do you wanna play first?</h4> <RadioButton options={playFirstOptions} onChange={inputHandler} /> <Button label='Next' onClick={buttonClickHandler} /></div>)
 
   const stageDisplay = {
     0: stageOne,
     1: stageTwo,
     2: stageThree,
-    3: (<div><Board /></div>)
+    3: <Board />
   }
 
   return (
