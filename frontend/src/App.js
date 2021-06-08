@@ -6,6 +6,7 @@ import { useState } from 'react';
 import Button from "./components/Button"
 import RadioButton from './components/RadioButton'
 import Validation from './validations';
+import AppFixtures from './fixtures/App'
 
 function App() {
   const [showError, setShowError] = useState(false)
@@ -43,39 +44,9 @@ function App() {
     }
   }
 
-  const stageTwoOptions = [
-    {
-      id: 1,
-      value: 'c',
-      label: 'Computer'
-    },
-    {
-      id: 2,
-      value: 'h',
-      label: 'Human'
-    },
-    {
-      id: 3,
-      value: 's',
-      label: 'Smart Computer'
-    }
-  ]
-  const playFirstOptions = [
-    {
-      id: 11,
-      value: 'y',
-      label: 'Yes'
-    },
-    {
-      id: 21,
-      value: 'n',
-      label: 'No'
-    },
-  ]
-
   const stageOne = (<div> <InputField label='Enter the size of the board' type='number' onChange={inputHandler} onKeyUp={buttonClickHandler} showError={showError} /> <Button label='Next' onClick={buttonClickHandler} /></div>)
-  const stageTwo = (<div> <h4>Choose player</h4> <RadioButton options={stageTwoOptions} onChange={inputHandler} /> <Button label='Next' onClick={buttonClickHandler} /></div>)
-  const stageThree = (<div> <h4>Do you wanna play first?</h4> <RadioButton options={playFirstOptions} onChange={inputHandler} /> <Button label='Next' onClick={buttonClickHandler} /></div>)
+  const stageTwo = (<div> <h4>Choose player</h4> <RadioButton options={AppFixtures.stageTwo()} onChange={inputHandler} /> <Button label='Next' onClick={buttonClickHandler} /></div>)
+  const stageThree = (<div> <h4>Do you wanna play first?</h4> <RadioButton options={AppFixtures.stageThree()} onChange={inputHandler} /> <Button label='Next' onClick={buttonClickHandler} /></div>)
 
   const stageDisplay = {
     0: stageOne,
