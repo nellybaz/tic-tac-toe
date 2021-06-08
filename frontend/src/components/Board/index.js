@@ -2,11 +2,17 @@ import Cell from "../Cell"
 import './index.css'
 
 
-export default function Board() {
+export default function Board(props) {
+  const getSize = () => (props.size * props.size) || 9
+
+  const style = {
+    display: 'grid',
+    gridTemplateColumns: `repeat(${props.size || 3}, 1fr)`
+  }
   return (
-    <div className='board' data-testid='board'>{
-      [...Array(9).keys()].map((index)=>
-        <Cell key={index} value={index} clickHandler={()=>{alert(0)}}/>
+    <div style={style} data-testid='board'>{
+      [...Array(getSize()).keys()].map((index) =>
+        <Cell key={index} value={index} clickHandler={() => { alert(0) }} />
       )
     }</div>
   )

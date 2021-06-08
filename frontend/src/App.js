@@ -52,7 +52,7 @@ function App() {
     0: stageOne,
     1: stageTwo,
     2: stageThree,
-    3: <Board />
+    3: <Board size={state.boardSize}/>
   }
 
   return (

@@ -18,9 +18,18 @@ describe("Board", () => {
   it("shoud render with the right value", async () => {
     const value = '0'
     await act(async () => {
-      render(<Board value={value} />, container)
+      render(<Board value={value} size={3} />, container)
     })
     for (let index = 0; index < 9; index++)
+      expect(container.querySelector(`[data-testid='cell-${index}']`).textContent).toEqual(index.toString())
+  })
+
+  it("shoud render correct size", async () => {
+    const value = '0'
+    await act(async () => {
+      render(<Board value={value} size={4} />, container)
+    })
+    for (let index = 0; index < 16; index++)
       expect(container.querySelector(`[data-testid='cell-${index}']`).textContent).toEqual(index.toString())
   })
 
