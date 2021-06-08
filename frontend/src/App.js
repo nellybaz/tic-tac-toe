@@ -5,16 +5,22 @@ import Board from './components/Board';
 import { useState } from 'react';
 import Button from "./components/Button"
 import RadioButton from './components/RadioButton'
+import Validation from './validations';
 
 function App() {
   const [showError, setShowError] = useState(false)
   const [stage, setStage] = useState(0)
   const [state, setState] = useState({ boardSize: 0, opponent: 'c', playFirst: true })
 
+  const STAGEVALUE = {0:state.boardSize, 1: state.opponent, 2: state.playFirst}
+
+  const getStageValue = (stage) => {
+    return STAGEVALUE[stage]
+  }
+
   const buttonClickHandler = _ => {
-    if (state.boardSize === 0) setShowError(true)
+    if (Validation.shouldShowError(stage, getStageValue(stage))) setShowError(true)
     else setStage(stage + 1)
-    if (stage === 2) console.log(state);
   }
 
   const inputHandler = (event) => {
@@ -89,8 +95,8 @@ function App() {
           stageDisplay[stage]
         }
         {
-      showError && <small data-testid='input-error'>Response is required</small>
-    }
+          showError && <small data-testid='input-error'>Invalid response</small>
+        }
       </header>
     </div>
   );
