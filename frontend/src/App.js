@@ -12,6 +12,7 @@ function App() {
   const [showError, setShowError] = useState(false)
   const [stage, setStage] = useState(0)
   const [state, setState] = useState({ boardSize: 0, opponent: 'c', playFirst: true })
+  const [board, setBoard] = useState([...Array(9).keys()])
 
   const STAGEVALUE = {0:state.boardSize, 1: state.opponent, 2: state.playFirst}
 
@@ -29,6 +30,7 @@ function App() {
     switch (stage) {
       case 0:
         setState({ ...state, boardSize: parseInt(userInput) })
+        setBoard([...Array(parseInt(userInput)*parseInt(userInput)).keys()])
         break;
 
       case 1:
@@ -52,7 +54,7 @@ function App() {
     0: stageOne,
     1: stageTwo,
     2: stageThree,
-    3: <Board size={state.boardSize}/>
+    3: <Board board={board} clickHandler={(index)=> alert(index)}/>
   }
 
   return (
