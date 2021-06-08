@@ -3,16 +3,16 @@ import './index.css'
 
 
 export default function Board(props) {
-  const getSize = () => (props.size * props.size) || 9
+  const getSize = () => Math.sqrt(props.board.length) || 3
 
   const style = {
     display: 'grid',
-    gridTemplateColumns: `repeat(${props.size || 3}, 1fr)`
+    gridTemplateColumns: `repeat(${getSize()}, 1fr)`
   }
   return (
     <div style={style} data-testid='board'>{
-      [...Array(getSize()).keys()].map((index) =>
-        <Cell key={index} value={index} clickHandler={() => { alert(0) }} />
+      props.board.map((item, index) =>
+        <Cell key={index} index={index} value={item} clickHandler={props.clickHandler} />
       )
     }</div>
   )

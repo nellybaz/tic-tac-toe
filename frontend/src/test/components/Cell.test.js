@@ -18,7 +18,7 @@ describe("Cell", () => {
   it("shoud render with the right value", async () => {
     const value = '0'
     await act(async () => {
-      render(<Cell value={value} />, container)
+      render(<Cell value={value}  index={value}/>, container)
     })
     expect(container.querySelector(`[data-testid='cell-${value}']`).textContent).toEqual(value)
   })
@@ -28,7 +28,7 @@ describe("Cell", () => {
     const clickHandler = jest.fn()
 
     await act(async () => {
-      render(<Cell value={value} clickHandler={clickHandler}/>, container)
+      render(<Cell index={value} value={value} clickHandler={clickHandler}/>, container)
     })
 
     const cell = container.querySelector(`[data-testid='cell-${value}']`)
@@ -40,4 +40,4 @@ describe("Cell", () => {
 
     expect(clickHandler).toHaveBeenCalledTimes(1)
   })
-})
+}) 
