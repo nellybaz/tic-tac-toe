@@ -1,7 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import Board from "./components/Board";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Validation from "./validations";
 import AppFixtures from "./fixtures/App";
 import { StageOne } from "./components/StageOne";
@@ -9,7 +9,7 @@ import { StageTwo } from "./components/StageTwo";
 import { StageThree } from "./components/StageThree";
 
 function App() {
-  const [showError, setShowError] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
   const [stage, setStage] = useState(0);
   const [state, setState] = useState({
     boardSize: 0,
@@ -26,6 +26,19 @@ function App() {
     2: state.playFirst,
   };
 
+  useEffect(() => {
+    processGameNotification();
+    makeMoveForComputer();
+  }, [stage, state.currrenSymbol]);
+
+  const makeMoveForComputer=()=>{
+    if(state.currrenSymbol === 'O' && state.opponent !== 'h' && stage === 3) {
+      
+      const randomMove = Math.floor(Math.random() * state.board.length)
+      updateBoard(randomMove)
+    }
+  }
+
   const updateBoard = (givenIndex) => {
     const currentSymbol = state.currrenSymbol;
     const newSymbol = state.currrenSymbol === "X" ? "O" : "X";
@@ -39,14 +52,26 @@ function App() {
     return STAGEVALUE[stage];
   };
 
+  const processGameNotification = () => {
+    if (stage === 3) {
+      setShowNotification(true);
+      setState({
+        ...state,
+        notificationText: `Player ${
+          state.currrenSymbol === "X" ? "1" : "2"
+        }'s turn`,
+      });
+    }
+  };
+
   const processNextStage = () => {
-    if (state.opponent === 'h' && stage === 1) setStage(stage + 2);
+    if (state.opponent === "h" && stage === 1) setStage(stage + 2);
     else setStage(stage + 1);
   };
 
   const buttonClickHandler = (_) => {
     if (Validation.shouldShowError(stage, getStageValue(stage)))
-      setShowError(true);
+      setShowNotification(true);
     else processNextStage();
   };
 
@@ -78,7 +103,7 @@ function App() {
   const stageDisplay = {
     0: (
       <StageOne
-        showError={showError}
+        showError={showNotification}
         inputHandler={inputHandler}
         buttonClickHandler={buttonClickHandler}
       />
@@ -108,7 +133,7 @@ function App() {
 
         <br />
         {stageDisplay[stage]}
-        {showError && (
+        {showNotification && (
           <small data-testid="input-error">{state.notificationText}</small>
         )}
       </header>
