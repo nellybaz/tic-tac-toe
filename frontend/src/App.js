@@ -1,75 +1,108 @@
-import logo from './logo.svg';
-import './App.css';
-import InputField from './components/InputField/index';
-import Board from './components/Board';
-import { useState } from 'react';
-import Button from "./components/Button"
-import RadioButton from './components/RadioButton'
-import Validation from './validations';
-import AppFixtures from './fixtures/App'
+import logo from "./logo.svg";
+import "./App.css";
+import Board from "./components/Board";
+import { useState } from "react";
+import Validation from "./validations";
+import AppFixtures from "./fixtures/App";
+import { StageOne } from "./components/StageOne";
+import { StageTwo } from "./components/StageTwo";
+import { StageThree } from "./components/StageThree";
 
 function App() {
-  const [showError, setShowError] = useState(false)
-  const [stage, setStage] = useState(0)
-  const [state, setState] = useState({ boardSize: 0, opponent: 'c', playFirst: true })
-  const [board, setBoard] = useState([...Array(9).keys()])
+  const [showError, setShowError] = useState(false);
+  const [stage, setStage] = useState(0);
+  const [state, setState] = useState({
+    boardSize: 0,
+    opponent: "",
+    playFirst: undefined,
+    board: [...Array(9).keys()],
+    currrenSymbol: "X",
+  });
 
-  const STAGEVALUE = {0:state.boardSize, 1: state.opponent, 2: state.playFirst}
+  const STAGEVALUE = {
+    0: state.boardSize,
+    1: state.opponent,
+    2: state.playFirst,
+  };
+
+  const updateBoard = (givenIndex) => {
+    const currentSymbol = state.currrenSymbol;
+    const newSymbol = state.currrenSymbol === "X" ? "O" : "X";
+    const newBoard = state.board.map((item, index) =>
+      index === givenIndex ? currentSymbol : item
+    );
+    setState({ ...state, board: newBoard, currrenSymbol: newSymbol });
+  };
 
   const getStageValue = (stage) => {
-    return STAGEVALUE[stage]
-  }
+    return STAGEVALUE[stage];
+  };
 
-  const buttonClickHandler = _ => {
-    if (Validation.shouldShowError(stage, getStageValue(stage))) setShowError(true)
-    else setStage(stage + 1)
-  }
+  const buttonClickHandler = (_) => {
+    if (Validation.shouldShowError(stage, getStageValue(stage)))
+      setShowError(true);
+    else setStage(stage + 1);
+  };
 
   const inputHandler = (event) => {
-    const userInput = event.target.value
+    const userInput = event.target.value;
     switch (stage) {
       case 0:
-        setState({ ...state, boardSize: parseInt(userInput) })
-        setBoard([...Array(parseInt(userInput)*parseInt(userInput)).keys()])
+        const intValue = parseInt(userInput);
+        setState({ ...state, boardSize: intValue });
         break;
 
       case 1:
-        setState({ ...state, opponent: userInput })
+        setState({
+          ...state,
+          opponent: userInput,
+          board: [...Array(state.boardSize * state.boardSize).keys()],
+        });
         break;
 
       case 2:
-        setState({ ...state, playFirst: userInput === 'y' })
+        setState({ ...state, playFirst: userInput === "y" });
         break;
 
       default:
         break;
     }
-  }
-
-  const stageOne = (<div> <InputField label='Enter the size of the board' type='number' onChange={inputHandler} onKeyUp={buttonClickHandler} showError={showError} /> <Button label='Next' onClick={buttonClickHandler} /></div>)
-  const stageTwo = (<div> <h4>Choose player</h4> <RadioButton options={AppFixtures.stageTwo()} onChange={inputHandler} /> <Button label='Next' onClick={buttonClickHandler} /></div>)
-  const stageThree = (<div> <h4>Do you wanna play first?</h4> <RadioButton options={AppFixtures.stageThree()} onChange={inputHandler} /> <Button label='Next' onClick={buttonClickHandler} /></div>)
+  };
 
   const stageDisplay = {
-    0: stageOne,
-    1: stageTwo,
-    2: stageThree,
-    3: <Board board={board} clickHandler={(index)=> alert(index)}/>
-  }
+    0: (
+      <StageOne
+        showError={showError}
+        inputHandler={inputHandler}
+        buttonClickHandler={buttonClickHandler}
+      />
+    ),
+    1: (
+      <StageTwo
+        options={AppFixtures.stageTwo()}
+        inputHandler={inputHandler}
+        buttonClickHandler={buttonClickHandler}
+      />
+    ),
+    2: (
+      <StageThree
+        options={AppFixtures.stageThree()}
+        inputHandler={inputHandler}
+        buttonClickHandler={buttonClickHandler}
+      />
+    ),
+    3: <Board board={state.board} clickHandler={updateBoard} />,
+  };
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" width={'100vw'} />
+        <img src={logo} className="App-logo" alt="logo" width={"100vw"} />
         <h3>Welcome to tic-tac-toe game</h3>
 
         <br />
-        {
-          stageDisplay[stage]
-        }
-        {
-          showError && <small data-testid='input-error'>Invalid response</small>
-        }
+        {stageDisplay[stage]}
+        {showError && <small data-testid="input-error">Invalid response</small>}
       </header>
     </div>
   );
