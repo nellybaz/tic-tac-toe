@@ -17,6 +17,7 @@ function App() {
     playFirst: undefined,
     board: [...Array(9).keys()],
     currrenSymbol: "X",
+    notificationText: "Invalid response",
   });
 
   const STAGEVALUE = {
@@ -38,10 +39,15 @@ function App() {
     return STAGEVALUE[stage];
   };
 
+  const processNextStage = () => {
+    if (state.opponent === 'h' && stage === 1) setStage(stage + 2);
+    else setStage(stage + 1);
+  };
+
   const buttonClickHandler = (_) => {
     if (Validation.shouldShowError(stage, getStageValue(stage)))
       setShowError(true);
-    else setStage(stage + 1);
+    else processNextStage();
   };
 
   const inputHandler = (event) => {
@@ -102,7 +108,9 @@ function App() {
 
         <br />
         {stageDisplay[stage]}
-        {showError && <small data-testid="input-error">Invalid response</small>}
+        {showError && (
+          <small data-testid="input-error">{state.notificationText}</small>
+        )}
       </header>
     </div>
   );
