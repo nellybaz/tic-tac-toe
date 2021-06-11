@@ -1,4 +1,3 @@
-require_relative './tic-tac-toe/game_text'
 require_relative './tic-tac-toe/board'
 require_relative './tic-tac-toe/game_rules'
 require_relative './tic-tac-toe/players/computer_player'
@@ -6,8 +5,7 @@ require_relative './tic-tac-toe/players/smart_computer_player'
 
 class TicTacToe
   def self.hi
-    puts 'Hi there from tic-tac-toe 2'
-    GameText.game_over
+    puts 'Hi there from tic-tac-toe'
   end
 
 
