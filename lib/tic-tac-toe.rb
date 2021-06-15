@@ -9,6 +9,12 @@ class TicTacToe
   end
 
 
+  def self.valid_move?(state, move)
+    board = Board.new(3)
+    board.state = state
+    board.unselected_cells.include?(move)
+  end
+
   def self.draw?(state)
     board = Board.new(3)
     board.state = state
