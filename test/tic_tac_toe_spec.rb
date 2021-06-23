@@ -17,4 +17,28 @@ RSpec.describe TicTacToe do
     state = ['X','X','X','X',4,'X','X','X','X']
     expect(TicTacToe.computer_move(state, 0, 'X')).to eq 4
   end
+
+  it 'returns valid game state' do
+    move = 3
+    state = %w[O O O X O X X O X]
+    type = 'human'
+    symbol = 'X'
+
+    response  = TicTacToe.move(type, state, symbol)
+
+    expect(response['game_state']).not_to eq('win')
+  end
+
+  it 'returns valid move for computer player' do
+    move = 3
+    state = ['X','O','X',
+              'O',4,'O',
+              'O','O','X']
+    type = 'computer'
+    symbol = 'X'
+
+    response  = TicTacToe.move(type, state, symbol)
+    expect(response[:game_state]).to eq('playing')
+    expect(response[:move]).to eq(4)
+  end
 end

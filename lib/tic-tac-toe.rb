@@ -8,6 +8,34 @@ class TicTacToe
     puts 'Hi there from tic-tac-toe'
   end
 
+  def self.move(type, state, symbol)
+    board = Board.new(3)
+    board.state = state
+      
+    if GameRules.win?(board, symbol)
+      return {
+        game_state:'win'
+      }
+
+
+   elsif GameRules.draw?(board)
+      return {
+        game_state:'draw'
+      }
+    end
+
+    if type == 'human'
+      return {
+        game_state:'playing'
+      }
+    end
+
+    move = type == 'computer' ? ComputerPlayer.new(1,symbol).move(board) : SmartComputerPlayer.new(1, symbol).move(board)
+    return {
+      move:move,
+      game_state:'playing'
+      }
+  end
 
   def self.valid_move?(state, move)
     board = Board.new(3)
@@ -15,6 +43,7 @@ class TicTacToe
     board.unselected_cells.include?(move)
   end
 
+  # Refactor initilizing and then assign
   def self.draw?(state)
     board = Board.new(3)
     board.state = state
