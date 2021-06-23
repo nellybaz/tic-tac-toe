@@ -1,5 +1,5 @@
 import axios from "axios";
-const URL = "http://localhost:3000/move";
+const URL = "https://ttt-api-v111.herokuapp.com/move";
 
 export class GameEngine{
   static async move(opponent, symbol, board){

@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'tic-tac-toe'
-  s.version     = '0.1.2'
+  s.version     = '0.1.3'
   s.summary     = "Tic-tac-toe game"
   s.description = "A simple tic-tac-toe game"
   s.authors     = ["Nelson Bassey"]
