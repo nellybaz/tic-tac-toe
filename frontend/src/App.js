@@ -76,18 +76,19 @@ function App() {
     try {
       const res = await axios.post(URL, body);
       const { game_state } = res.data;
-      if (["win", "draw"].includes(game_state)) {
-        const terminalText = `Game is a ${game_state.toUpperCase()}`;
-        setModalValue(terminalText);
-        setShowModal(true);
-        setStage(0);
-      }
 
-      return ["win", "draw"].includes(game_state);
+      return {
+        game_state,
+        state: ["win", "draw"].includes(game_state)
+      }
     } catch (error) {
       console.log(error);
     }
-    return false;
+    
+    return {
+      state:null,
+      game_state:null
+    };
   };
 
   const updateBoard = async (givenIndex) => {
@@ -99,7 +100,13 @@ function App() {
 
     const terminal = await isTerminalState(newBoard, currentSymbol);
 
-    if (terminal) return;
+    if (terminal.state){
+      const terminalText = `Game is a ${terminal.game_state.toUpperCase()}`;
+        setModalValue(terminalText);
+        setShowModal(true);
+        // setStage(0);
+        return
+    };
 
     setState({ ...state, board: newBoard, currrentSymbol: newSymbol });
   };
@@ -146,9 +153,9 @@ function App() {
       return { ...state, playFirst: userInput === "y" };
     },
   };
+
   const inputHandler = (event) => {
     const userInput = event.target.value;
-
     setState(inputHandlerDataHash[stage](userInput));
   };
 
