@@ -7,7 +7,6 @@ import Validation from "./validations";
 
 import axios from "axios";
 
-
 function App() {
   const [modalValue, setModalValue] = useState("");
   const [showNotification, setShowNotification] = useState(false);
@@ -57,7 +56,7 @@ function App() {
 
     const res = await axios.post(URL, data);
     const computer_move = res.data["move"];
-    updateBoard(computer_move)
+    updateBoard(computer_move);
   };
 
   const isTerminalState = async (board, symbol) => {
@@ -132,43 +131,39 @@ function App() {
     else processNextStage();
   };
 
+  const inputHandlerDataHash = {
+    0: (userInput) => {
+      return { ...state, boardSize: parseInt(userInput) };
+    },
+    1: (userInput) => {
+      return {
+        ...state,
+        opponent: userInput,
+        board: [...Array(state.boardSize * state.boardSize).keys()],
+      };
+    },
+    2: (userInput) => {
+      return { ...state, playFirst: userInput === "y" };
+    },
+  };
   const inputHandler = (event) => {
     const userInput = event.target.value;
-    switch (stage) {
-      case 0:
-        const intValue = parseInt(userInput);
-        setState({ ...state, boardSize: intValue });
-        break;
 
-      case 1:
-        setState({
-          ...state,
-          opponent: userInput,
-          board: [...Array(state.boardSize * state.boardSize).keys()],
-        });
-        break;
-
-      case 2:
-        setState({ ...state, playFirst: userInput === "y" });
-        break;
-
-      default:
-        break;
-    }
+    setState(inputHandlerDataHash[stage](userInput));
   };
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1 style={{font:'35px'}}>Welcome to tic-tac-toe game</h1>
+        <h1 style={{ font: "35px" }}>Welcome to tic-tac-toe game</h1>
         <br />
-        <StageDisplay 
-        stageNumber={stage} 
-        showNotification={showNotification} 
-        inputHandler={inputHandler} 
-        buttonClickHandler={buttonClickHandler}
-        board={state.board}
-        updateBoard={updateBoard}
+        <StageDisplay
+          stageNumber={stage}
+          showNotification={showNotification}
+          inputHandler={inputHandler}
+          buttonClickHandler={buttonClickHandler}
+          board={state.board}
+          updateBoard={updateBoard}
         />
         {showNotification && (
           <small data-testid="input-error">{state.notificationText}</small>
