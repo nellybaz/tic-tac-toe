@@ -1,9 +1,9 @@
-import logo from "./logo.svg";
 import "./App.css";
 import StageDisplay from "./components/StageDisplay";
 import Modal from "./components/Modal";
 import { useEffect, useState } from "react";
 import Validation from "./validations";
+import { ComputerMove } from "./actions/ComputerMoves";
 
 import axios from "axios";
 
@@ -43,21 +43,10 @@ function App() {
   useEffect(() => {
     processGameNotification();
 
-    if (computersTurn()) makeComputerMove();
+    if (computersTurn()) ComputerMove.make(state.opponent, state.board, state.currrentSymbol, updateBoard);
   }, [stage, state.currrentSymbol]);
 
-  const makeComputerMove = async () => {
-    const type = state.opponent == "s" ? "smart_computer" : "computer";
-    const data = {
-      state: state.board,
-      type,
-      symbol: state.currrentSymbol,
-    };
 
-    const res = await axios.post(URL, data);
-    const computer_move = res.data["move"];
-    updateBoard(computer_move);
-  };
 
   const isTerminalState = async (board, symbol) => {
     const type =
@@ -84,7 +73,7 @@ function App() {
     } catch (error) {
       console.log(error);
     }
-    
+
     return {
       state:null,
       game_state:null
@@ -104,7 +93,9 @@ function App() {
       const terminalText = `Game is a ${terminal.game_state.toUpperCase()}`;
         setModalValue(terminalText);
         setShowModal(true);
-        // setStage(0);
+        setTimeout(()=>{
+          setStage(0);
+        }, 5000)
         return
     };
 
