@@ -1,14 +1,14 @@
 import logo from "./logo.svg";
 import "./App.css";
-import Board from "./components/Board";
+import StageDisplay from "./components/StageDisplay";
 import { useEffect, useState } from "react";
 import Validation from "./validations";
-import AppFixtures from "./fixtures/App";
-import { StageOne } from "./components/StageOne";
-import { StageTwo } from "./components/StageTwo";
-import { StageThree } from "./components/StageThree";
+
+import axios from "axios";
+import Button from "./components/Button";
 
 function App() {
+  const [modalValue, setModalValue] = useState("");
   const [showNotification, setShowNotification] = useState(false);
   const [stage, setStage] = useState(0);
   const [state, setState] = useState({
@@ -16,9 +16,13 @@ function App() {
     opponent: "",
     playFirst: undefined,
     board: [...Array(9).keys()],
-    currrenSymbol: "X",
+    currrentSymbol: "X",
     notificationText: "Invalid response",
   });
+
+  const [showModal, setShowModal] = useState(false);
+
+  const URL = "http://localhost:3000/move";
 
   const STAGEVALUE = {
     0: state.boardSize,
@@ -26,26 +30,78 @@ function App() {
     2: state.playFirst,
   };
 
+  const defaultBoard = () => {
+    return [...Array(9).keys()];
+  };
+
+  const computersTurn = () => {
+    const computer_opponent = ["s", "c"].includes(state.opponent);
+    const computer_move = state.currrentSymbol == "O";
+    return computer_opponent && computer_move;
+  };
+
   useEffect(() => {
     processGameNotification();
-    makeMoveForComputer();
-  }, [stage, state.currrenSymbol]);
 
-  const makeMoveForComputer=()=>{
-    if(state.currrenSymbol === 'O' && state.opponent !== 'h' && stage === 3) {
-      
-      const randomMove = Math.floor(Math.random() * state.board.length)
-      updateBoard(randomMove)
+    if (computersTurn()) makeComputerMove();
+  }, [stage, state.currrentSymbol]);
+
+  const makeComputerMove = async () => {
+    const type = state.opponent == "s" ? "smart_computer" : "computer";
+    const data = {
+      state: state.board,
+      type,
+      symbol: state.currrentSymbol,
+    };
+
+    const res = await axios.post(URL, data);
+    const computer_move = res.data["move"];
+    updateBoard(computer_move)
+  };
+
+  const isTerminalState = async (board, symbol) => {
+    const type =
+      state.opponent == "s"
+        ? "smart_computer"
+        : state.opponent == "c"
+        ? "computer"
+        : "human";
+
+    const body = {
+      state: board,
+      type,
+      symbol: symbol,
+    };
+
+    try {
+      const res = await axios.post(URL, body);
+      const { game_state } = res.data;
+      if (["win", "draw"].includes(game_state)) {
+        const terminalText = `Game is a ${game_state.toUpperCase()}`;
+        setModalValue(terminalText);
+        setShowModal(true);
+        setStage(0);
+      }
+
+      return ["win", "draw"].includes(game_state);
+    } catch (error) {
+      console.log(error);
     }
-  }
+    return false;
+  };
 
-  const updateBoard = (givenIndex) => {
-    const currentSymbol = state.currrenSymbol;
-    const newSymbol = state.currrenSymbol === "X" ? "O" : "X";
+  const updateBoard = async (givenIndex) => {
+    const currentSymbol = state.currrentSymbol;
+    const newSymbol = state.currrentSymbol === "X" ? "O" : "X";
     const newBoard = state.board.map((item, index) =>
       index === givenIndex ? currentSymbol : item
     );
-    setState({ ...state, board: newBoard, currrenSymbol: newSymbol });
+
+    const terminal = await isTerminalState(newBoard, currentSymbol);
+
+    if (terminal) return;
+
+    setState({ ...state, board: newBoard, currrentSymbol: newSymbol });
   };
 
   const getStageValue = (stage) => {
@@ -58,7 +114,7 @@ function App() {
       setState({
         ...state,
         notificationText: `Player ${
-          state.currrenSymbol === "X" ? "1" : "2"
+          state.currrentSymbol === "X" ? "1" : "2"
         }'s turn`,
       });
     }
@@ -100,30 +156,7 @@ function App() {
     }
   };
 
-  const stageDisplay = {
-    0: (
-      <StageOne
-        showError={showNotification}
-        inputHandler={inputHandler}
-        buttonClickHandler={buttonClickHandler}
-      />
-    ),
-    1: (
-      <StageTwo
-        options={AppFixtures.stageTwo()}
-        inputHandler={inputHandler}
-        buttonClickHandler={buttonClickHandler}
-      />
-    ),
-    2: (
-      <StageThree
-        options={AppFixtures.stageThree()}
-        inputHandler={inputHandler}
-        buttonClickHandler={buttonClickHandler}
-      />
-    ),
-    3: <Board board={state.board} clickHandler={updateBoard} />,
-  };
+
 
   return (
     <div className="App">
@@ -132,13 +165,49 @@ function App() {
         <h3>Welcome to tic-tac-toe game</h3>
 
         <br />
-        {stageDisplay[stage]}
+        <StageDisplay 
+        stageNumber={stage} 
+        showNotification={showNotification} 
+        inputHandler={inputHandler} 
+        buttonClickHandler={buttonClickHandler}
+        board={state.board}
+        updateBoard={updateBoard}
+        />
         {showNotification && (
           <small data-testid="input-error">{state.notificationText}</small>
         )}
       </header>
+
+      {showModal && (
+        <Modal
+          value={modalValue}
+          onClick={() => {
+            setShowModal(false);
+            setState({ ...state, board: defaultBoard() });
+          }}
+        />
+      )}
     </div>
   );
 }
 
 export default App;
+
+function Modal(props) {
+  return (
+    <div
+      style={{
+        width: "400px",
+        height: "200px",
+        position: "absolute",
+        left: "40vw",
+        top: "100px",
+        borderRadius: "5px",
+        backgroundColor: "white",
+      }}
+    >
+      <h4>{props.value}</h4>
+      <Button label="OK" onClick={props.onClick} />
+    </div>
+  );
+}
