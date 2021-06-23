@@ -1,18 +1,10 @@
-import axios from "axios";
-
-const URL = "http://localhost:3000/move";
+import { GameEngine } from "../services/GameEngine";
 
 export class ComputerMove {
   static async make(opponent, board, currentSymbol, callback){
-      const type = opponent == "s" ? "smart_computer" : "computer";
-      const data = {
-        state: board,
-        type,
-        symbol: currentSymbol,
-      };
     
-      const res = await axios.post(URL, data);
-      const computer_move = res.data["move"];
+      const res = await GameEngine.move(opponent, currentSymbol, board);
+      const computer_move = res["move"];
       callback(computer_move);
     };
 

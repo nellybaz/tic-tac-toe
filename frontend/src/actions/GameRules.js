@@ -1,25 +1,9 @@
-import axios from "axios";
-const URL = "http://localhost:3000/move";
+import { GameEngine } from "../services/GameEngine";
 
 export class GameRules{
   static async isTerminalState(board, symbol, opponent){
-    const type =
-      opponent == "s"
-        ? "smart_computer"
-        : opponent == "c"
-        ? "computer"
-        : "human";
-
-    const body = {
-      state: board,
-      type,
-      symbol: symbol,
-    };
-
     try {
-      const res = await axios.post(URL, body);
-      const { game_state } = res.data;
-
+      const { game_state } = await GameEngine.move(opponent, symbol, board);
       return {
         game_state,
         state: ["win", "draw"].includes(game_state),
