@@ -10,7 +10,7 @@ class TicTacToe
 
   def self.move(type, state, symbol)
     board_size = Math.sqrt(state.length)
-    board = Board.new(board_size)
+    board = Board.new(board_size.to_i)
     board.state = state
       
     if GameRules.win?(board, symbol)
