@@ -4,8 +4,7 @@ import Modal from "./components/Modal";
 import { useEffect, useState } from "react";
 import Validation from "./validations";
 import { ComputerMove } from "./actions/ComputerMoves";
-
-import axios from "axios";
+import { GameRules } from "./actions/GameRules";
 
 function App() {
   const [modalValue, setModalValue] = useState("");
@@ -22,8 +21,6 @@ function App() {
 
   const [showModal, setShowModal] = useState(false);
 
-  const URL = "http://localhost:3000/move";
-
   const STAGEVALUE = {
     0: state.boardSize,
     1: state.opponent,
@@ -34,52 +31,19 @@ function App() {
     return [...Array(9).keys()];
   };
 
-  const computersTurn = () => {
-    const computer_opponent = ["s", "c"].includes(state.opponent);
-    const computer_move = state.currrentSymbol == "O";
-    return computer_opponent && computer_move;
-  };
-
   useEffect(() => {
     processGameNotification();
 
-    if (computersTurn()) ComputerMove.make(state.opponent, state.board, state.currrentSymbol, updateBoard);
+    if (ComputerMove.isTurn(state.opponent, state.currrentSymbol))
+      ComputerMove.make(
+        state.opponent,
+        state.board,
+        state.currrentSymbol,
+        updateBoard
+      );
   }, [stage, state.currrentSymbol]);
 
-
-
-  const isTerminalState = async (board, symbol) => {
-    const type =
-      state.opponent == "s"
-        ? "smart_computer"
-        : state.opponent == "c"
-        ? "computer"
-        : "human";
-
-    const body = {
-      state: board,
-      type,
-      symbol: symbol,
-    };
-
-    try {
-      const res = await axios.post(URL, body);
-      const { game_state } = res.data;
-
-      return {
-        game_state,
-        state: ["win", "draw"].includes(game_state)
-      }
-    } catch (error) {
-      console.log(error);
-    }
-
-    return {
-      state:null,
-      game_state:null
-    };
-  };
-
+  
   const updateBoard = async (givenIndex) => {
     const currentSymbol = state.currrentSymbol;
     const newSymbol = state.currrentSymbol === "X" ? "O" : "X";
@@ -87,17 +51,17 @@ function App() {
       index === givenIndex ? currentSymbol : item
     );
 
-    const terminal = await isTerminalState(newBoard, currentSymbol);
+    const terminal = await GameRules.isTerminalState(newBoard, currentSymbol, state.opponent);
 
-    if (terminal.state){
+    if (terminal.state) {
       const terminalText = `Game is a ${terminal.game_state.toUpperCase()}`;
-        setModalValue(terminalText);
-        setShowModal(true);
-        setTimeout(()=>{
-          setStage(0);
-        }, 5000)
-        return
-    };
+      setModalValue(terminalText);
+      setShowModal(true);
+      setTimeout(() => {
+        setStage(0);
+      }, 5000);
+      return;
+    }
 
     setState({ ...state, board: newBoard, currrentSymbol: newSymbol });
   };
