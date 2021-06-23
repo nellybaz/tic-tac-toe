@@ -1,11 +1,12 @@
 import logo from "./logo.svg";
 import "./App.css";
 import StageDisplay from "./components/StageDisplay";
+import Modal from "./components/Modal";
 import { useEffect, useState } from "react";
 import Validation from "./validations";
 
 import axios from "axios";
-import Button from "./components/Button";
+
 
 function App() {
   const [modalValue, setModalValue] = useState("");
@@ -156,14 +157,10 @@ function App() {
     }
   };
 
-
-
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" width={"100vw"} />
-        <h3>Welcome to tic-tac-toe game</h3>
-
+        <h1 style={{font:'35px'}}>Welcome to tic-tac-toe game</h1>
         <br />
         <StageDisplay 
         stageNumber={stage} 
@@ -183,7 +180,7 @@ function App() {
           value={modalValue}
           onClick={() => {
             setShowModal(false);
-            setState({ ...state, board: defaultBoard() });
+            // setState({ ...state, board: defaultBoard() });
           }}
         />
       )}
@@ -192,22 +189,3 @@ function App() {
 }
 
 export default App;
-
-function Modal(props) {
-  return (
-    <div
-      style={{
-        width: "400px",
-        height: "200px",
-        position: "absolute",
-        left: "40vw",
-        top: "100px",
-        borderRadius: "5px",
-        backgroundColor: "white",
-      }}
-    >
-      <h4>{props.value}</h4>
-      <Button label="OK" onClick={props.onClick} />
-    </div>
-  );
-}
