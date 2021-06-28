@@ -25,12 +25,6 @@ class TicTacToe
       }
     end
 
-    if type == 'human'
-      return {
-        game_state:'playing'
-      }
-    end
-
     move = type == 'computer' ? ComputerPlayer.new(1,symbol).move(board) : SmartComputerPlayer.new(1, symbol).move(board)
     return {
       move:move,
