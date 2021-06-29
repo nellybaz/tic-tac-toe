@@ -32,13 +32,44 @@ RSpec.describe TicTacToe do
   it 'returns valid move for computer player' do
     move = 3
     state = ['X','O','X',
-              'O',4,'O',
-              'O','O','X']
+            'X',4,'O',
+            'O','X','O']
     type = 'computer'
     symbol = 'X'
 
     response  = TicTacToe.move(type, state, symbol)
     expect(response[:game_state]).to eq('playing')
     expect(response[:move]).to eq(4)
+  end
+
+  it 'returns correct symbol difference' do
+    state = ['X','O','X',
+              'O',4,'O',
+              'O','O','X']
+
+    response  = TicTacToe.symbol_delta(state)
+    expect(response).to eq(2)
+  end
+
+  it 'checks board valid state' do
+    state1 = ['X','O','X',
+              'O',4,'O',
+              'O','O','X']
+
+    state2 = ['X','O','X',
+              'X',4,'O',
+              'O','X','O']
+
+    tests = [
+      [state1, false], 
+      [state2, true]
+    ]
+    tests.each do |item|
+      response  = TicTacToe.board_has_valid_state(item[0])
+      expect(response).to eq(item[1])
+    end
+
+
+    
   end
 end
