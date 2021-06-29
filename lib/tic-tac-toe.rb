@@ -13,7 +13,7 @@ class TicTacToe
     board = Board.new(board_size.to_i)
     board.state = state
       
-    if GameRules.win?(board, symbol)
+    if GameRules.win?(board, 'X') || GameRules.win?(board, 'O')
       return {
         game_state:'win'
       }
